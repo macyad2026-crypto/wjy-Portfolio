@@ -407,6 +407,132 @@
         .multi-image-stack img.stack-img.active {
             opacity: 1; z-index: 10;
         }
+
+        /* ========================================================= */
+        /* 📱 手机端专属适配 (屏幕宽度小于 768px 时自动生效) */
+        /* ========================================================= */
+        @media (max-width: 768px) {
+            /* 1. 顶部导航栏：改为上下堆叠，缩小间距 */
+            header {
+                flex-direction: column !important;
+                padding: 15px !important;
+                gap: 15px;
+            }
+            .logo {
+                font-size: 1.2rem !important;
+            }
+            nav ul {
+                gap: 15px !important;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                font-size: 0.9rem !important;
+                letter-spacing: 1px !important;
+            }
+
+            /* 2. 首屏大标题区：改为上下堆叠，全部居中 */
+            .hero {
+                flex-direction: column !important;
+                justify-content: center !important;
+                padding-top: 120px !important; 
+            }
+
+            /* 3. 缩小巨大的英文 Hello I'm WangJiayi */
+            .greeting {
+                font-size: 3.5rem !important; /* 字号减半 */
+                margin-bottom: 40px; /* 和下方的中文拉开距离 */
+                text-align: center;
+            }
+            /* 取消电脑端的错落缩进，手机上居中才好看 */
+            .line1, .line2, .line3 {
+                margin-left: 0 !important; 
+            }
+
+            /* 4. 缩小中文标语 */
+            .slogan-box h1 {
+                font-size: 1.3rem !important; 
+                letter-spacing: 3px !important; /* 缩小字间距防止诡异换行 */
+                text-align: center !important;
+            }
+
+            /* 5. 探照灯调整：防止光束把手机屏幕撑出横向滚动条 */
+            .light-beam {
+                width: 150vw !important; 
+            }
+        }
+
+        /* ========================================================= */
+        /* 📱 手机端专属适配 (下半场：全站内容模块排版纠正) */
+        /* ========================================================= */
+        @media (max-width: 768px) {
+            /* --- 1. 基础间距与标题调整 --- */
+            main { padding: 0 15px; width: 100%; box-sizing: border-box; }
+            .module-spacing { margin-top: 80px !important; padding-bottom: 50px !important; }
+            .title-group { flex-direction: column; align-items: flex-start; }
+            .title-group .en-title { margin-left: 0 !important; margin-top: 5px; font-size: 0.8rem !important; }
+            .section-header-row { flex-direction: column; gap: 15px; }
+
+            /* --- 2. 网格卡片：强行从“多列”变成“单列” --- */
+            .bento-grid, 
+            .social-feed-grid, 
+            .timeline-grid, 
+            .dashboard-grid {
+                grid-template-columns: 1fr !important; /* 一行只显示一个卡片 */
+                gap: 20px !important;
+            }
+
+            /* --- 3. 左右分栏容器：强行变成“上下堆叠” --- */
+            .master-campaign-card, 
+            .presentation-row, 
+            .editorial-row, 
+            .slider-card, 
+            .wechat-modal-content {
+                flex-direction: column !important; /* 上下堆叠 */
+                gap: 25px !important;
+                padding: 20px !important;
+            }
+
+            /* --- 4. 优化卡片内部的内边距，防止手机上太空旷 --- */
+            .bento-card, .feed-card, .campaign-data, .dash-panel {
+                padding: 25px !important;
+            }
+            .card-real-content {
+                margin: -25px !important; padding: 25px !important;
+            }
+
+            /* --- 5. 弹窗内部排版终极修复 --- */
+            .modal-scroll-container { 
+                padding: 80px 20px 40px 20px !important; /* 缩小弹窗内边距 */
+            }
+            .modal-title-row {
+                flex-direction: column; /* 弹窗标题和下载按钮上下堆叠 */
+                align-items: flex-start !important;
+                gap: 15px;
+            }
+            .modal-title-row h2 { font-size: 1.6rem !important; }
+            
+            /* 隐藏左侧占地方的 BACK 按钮，只保留右上角的 CLOSE */
+            .back-modal-btn { display: none !important; }
+            .close-modal-btn { 
+                top: 15px !important; right: 15px !important; 
+                padding: 8px 16px !important; font-size: 0.8rem !important;
+            }
+
+            /* --- 6. 特殊复杂模块修复 --- */
+            .editorial-bento-gallery {
+                display: flex !important; flex-direction: column !important; /* 便当盒图片堆叠 */
+            }
+            .wechat-video-grid {
+                grid-template-columns: repeat(2, 1fr) !important; /* 微信视频改成一行两个 */
+            }
+            .phone-mockup {
+                transform: scale(0.9); /* 稍微缩小手机样机，防止超宽 */
+            }
+            .slider-card-visual {
+                width: 100% !important; /* 可口可乐轮播图宽度拉满 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -586,7 +712,7 @@
             <div class="social-feed-grid">
     <!-- 🚨 把 div 换成了 a 标签，加上了链接属性和鼠标变小手的手势 -->
     <a href="https://www.douyin.com/user/MS4wLjABAAAAYA29bSajLNOdctsNzZwotn4F6unKLpbIDLJKcy9NP88pIiEZ5rJU4RXuQRPsjoxP?from_tab_name=main" target="_blank" class="feed-card" style="text-decoration: none; display: flex; flex-direction: column; cursor: pointer;">
-        <div class="feed-platform">抖音</div>
+        <div class="feed-platform" style="align-self: flex-start;">抖音</div>
         <h4>双鹿电池青年号：校园爆款制造机</h4>
         <p style="color: #8492a6;">独立负责“双鹿青年路透社”内容体系搭建。精准定位青年搞笑日常与热点二创，包揽脚本撰写、拍摄、剪辑及包装。运营期间打造多支爆款，单条最高点赞900+，全网累计播放量超<strong>30万+</strong>，有效实现了传统品牌的年轻化破圈。</p>
         
@@ -1596,34 +1722,41 @@
             });
         }
 
-// --- 13. 网页背景滚动渐变 (黑夜 -> 蓝调破晓 -> 金色日出) ---
-        window.addEventListener('scroll', () => {
-            const scrollPx = document.documentElement.scrollTop || document.body.scrollTop;
-            const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollRatio = maxScroll > 0 ? scrollPx / maxScroll : 0;
+// --- 13. 网页背景滚动渐变 (微蓝破晓 -> 金色日出) ---
+window.addEventListener('scroll', () => {
+    const scrollPx = document.documentElement.scrollTop || document.body.scrollTop;
+    const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollRatio = maxScroll > 0 ? scrollPx / maxScroll : 0;
 
-            const bgDawn = document.getElementById('bg-dawn');
-            const bgSunrise = document.getElementById('bg-sunrise');
+    const bgDawn = document.getElementById('bg-dawn');
+    const bgSunrise = document.getElementById('bg-sunrise');
 
-            if (bgDawn && bgSunrise) {
-                // 0 ~ 40%：深邃黑夜 (无需变动)
-                // 40% ~ 70%：过渡到蓝调破晓
-                // 70% ~ 100%：过渡到金色日出
-                if (scrollRatio < 0.4) {
-                    bgDawn.style.opacity = 0;
-                    bgSunrise.style.opacity = 0;
-                } else if (scrollRatio >= 0.4 && scrollRatio < 0.7) {
-                    let dawnRatio = (scrollRatio - 0.4) / 0.3; // 换算成 0 到 1
-                    bgDawn.style.opacity = dawnRatio;
-                    bgSunrise.style.opacity = 0;
-                } else {
-                    let sunriseRatio = (scrollRatio - 0.7) / 0.3; // 换算成 0 到 1
-                    bgDawn.style.opacity = 1 - sunriseRatio; // 蓝调逐渐褪去
-                    bgSunrise.style.opacity = sunriseRatio;  // 日出逐渐亮起
-                }
+    if (bgDawn && bgSunrise) {
+        // 1. 首屏阶段 (0 ~ 40%)：拒绝纯黑！初始自带 40% 蓝调，随滚动平滑过渡到 100% 蓝调
+        if (scrollRatio < 0.4) {
+            let dawnRatio = 0.4 + (scrollRatio / 0.4) * 0.6; 
+            bgDawn.style.opacity = dawnRatio;
+            bgSunrise.style.opacity = 0;
+            bgSunrise.style.filter = 'brightness(1)'; // 保持基础亮度
+        } 
+        // 2. 日出阶段 (40% ~ 100%)：金色日出早早进场，在 90% 时就彻底亮起！
+        else {
+            // (scrollRatio - 0.4) / 0.5 意味着在 40% + 50% = 90% 的位置就能跑满进度
+            let sunriseRatio = (scrollRatio - 0.4) / 0.5; 
+            
+            // 进度封顶，防止超过 100% 导致画面穿模
+            if (sunriseRatio > 1) {
+                sunriseRatio = 1; 
             }
-        });
 
+            bgDawn.style.opacity = 1 - sunriseRatio; // 蓝调逐渐褪去
+            bgSunrise.style.opacity = sunriseRatio;  // 日出完全升起
+
+            // 物理增亮魔法：太阳升起的同时，额外增加最高 40% 的亮度，更有光芒感
+            bgSunrise.style.filter = `brightness(${1 + (sunriseRatio * 0.4)})`;
+        }
+    }
+});
         
     </script>
 </body>
