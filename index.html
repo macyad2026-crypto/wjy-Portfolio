@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WangJiayi | AI策划作品集</title> 
+    <title>WangJiayi | 作品集</title> 
     
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@800&display=swap" rel="stylesheet">
     
@@ -668,25 +668,7 @@
 
             </div>
         </section>
-   <!-- 🚨 新增：05 留言互动专区 -->
-        <section id="feedback-section" class="portfolio-item module-spacing" style="max-width: 800px; margin: 0 auto; padding-top: 50px;">
-            <div class="section-header-row" style="justify-content: center; text-align: center; margin-bottom: 40px;">
-                <div class="title-group" style="display: flex; flex-direction: column; align-items: center;">
-                    <h2 style="font-size: 2rem; color: #fcd34d; margin-bottom: 10px; border: none;">05 / 留下您的回音</h2>
-                    <p style="color: #94a3b8; font-size: 0.95rem; letter-spacing: 1px;">任何意见、建议或面试交流，都期待您的驻足与指正</p>
-                </div>
-            </div>
-
-            <!-- 输入区 -->
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                <input type="text" id="comment-name" placeholder="您的称呼 / 联系方式 (选填)" style="width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; color: #fff; margin-bottom: 20px; font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.3s ease;">
-                <textarea id="comment-content" rows="4" placeholder="写下您的评价或建议..." style="width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; color: #fff; margin-bottom: 20px; font-family: inherit; font-size: 0.95rem; resize: vertical; outline: none; transition: border-color 0.3s ease;"></textarea>
-                <button id="submit-comment" style="background: #fcd34d; color: #0b1320; border: none; padding: 14px 30px; border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; width: 100%; box-shadow: 0 5px 15px rgba(252, 211, 77, 0.2);">发送留言 🚀</button>
-            </div>
-
-            <!-- 留言展示墙 (已清空) -->
-            <div id="comment-list" style="margin-top: 40px; display: flex; flex-direction: column; gap: 20px;">
-            </div>
+   
         </section>
     </main>
 
@@ -1642,60 +1624,7 @@
             }
         });
 
-        // --- 14. 留言板模拟提交逻辑 ---
-        const submitBtn = document.getElementById('submit-comment');
-        if (submitBtn) {
-            submitBtn.addEventListener('click', () => {
-                const nameInput = document.getElementById('comment-name');
-                const contentInput = document.getElementById('comment-content');
-                const content = contentInput.value.trim();
-                
-                if (!content) {
-                    submitBtn.innerHTML = '写点什么再发送吧 ✍️';
-                    submitBtn.style.background = '#f87171';
-                    setTimeout(() => {
-                        submitBtn.innerHTML = '发送留言 🚀';
-                        submitBtn.style.background = '#fcd34d';
-                    }, 2000);
-                    return;
-                }
-                
-                const displayName = nameInput.value.trim() || '神秘访客';
-                const list = document.getElementById('comment-list');
-                
-                // 创建新留言块
-                const newComment = document.createElement('div');
-                newComment.style = "background: rgba(0,0,0,0.2); padding: 20px 25px; border-radius: 12px; border-left: 3px solid #fcd34d; opacity: 0; transform: translateY(-20px); transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);";
-                newComment.innerHTML = `<strong style="color: #fcd34d; font-size: 1.05rem;">${displayName}</strong><p style="color: #e2e8f0; margin: 10px 0 0 0; font-size: 0.95rem; line-height: 1.6;">${content}</p>`;
-                
-                // 插入到列表最上方
-                list.insertBefore(newComment, list.firstChild);
-                
-                // 触发丝滑出现动画
-                setTimeout(() => {
-                    newComment.style.opacity = 1;
-                    newComment.style.transform = 'translateY(0)';
-                }, 50);
-
-                // 按钮成功状态
-                contentInput.value = '';
-                nameInput.value = '';
-                submitBtn.innerHTML = '发送成功！感谢您的回音 🎉';
-                submitBtn.style.background = '#4ade80';
-                
-                setTimeout(() => {
-                    submitBtn.innerHTML = '发送留言 🚀';
-                    submitBtn.style.background = '#fcd34d';
-                }, 3000);
-            });
-        }
         
-        // 留言框交互高亮
-        const inputs = document.querySelectorAll('#feedback-section input, #feedback-section textarea');
-        inputs.forEach(input => {
-            input.addEventListener('focus', () => input.style.borderColor = '#fcd34d');
-            input.addEventListener('blur', () => input.style.borderColor = 'rgba(255,255,255,0.1)');
-        });
     </script>
 </body>
 </html>
