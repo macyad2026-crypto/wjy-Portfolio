@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WangJiayi | AI策划作品集</title> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 基础背景与排版 --- */
+        body {
+            background-color: #0b1320; /* 纯深邃夜空底色 */
+            color: #d1d5db; 
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif; 
+            margin: 0; padding: 0; line-height: 1.8; overflow-x: hidden;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; 
+            padding: 25px 6%; z-index: 100; background-color: rgba(11, 19, 32, 0.75);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 600; color: #f8fafc; letter-spacing: 2px; text-transform: uppercase; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 60px; }
+        nav a { color: #94a3b8; text-decoration: none; font-size: 1.05rem; font-weight: 700; letter-spacing: 1.5px; transition: color 0.4s ease; }
+        nav a:hover { color: #fcd34d; }
+
+        /* 主体内容宽度 */
+        main { max-width: 1400px; width: 90%; margin: 0 auto; padding: 0 20px; }
+
+        .hero { display: flex; justify-content: space-between; align-items: center; height: 100vh; min-height: 700px; box-sizing: border-box; padding-top: 100px; position: relative; overflow: hidden; }
+
+        /* 胖乎乎的动感打招呼 */
+        .greeting { font-family: 'Fredoka', sans-serif; font-size: 6rem; font-weight: 800; color: #f8fafc; line-height: 1.1; cursor: default; z-index: 2; }
+        .char { display: inline-block; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.4s ease; margin-right: -5px; }
+        .char:nth-child(odd) { transform: translateY(-4px) rotate(4deg); }
+        .char:nth-child(even) { transform: translateY(4px) rotate(-4deg); }
+        .greeting:hover .char:nth-child(odd) { transform: translateY(-15px) rotate(-10deg); color: #fcd34d; }
+        .greeting:hover .char:nth-child(even) { transform: translateY(15px) rotate(10deg); color: #fb923c; }
+        .line1 { margin-left: 0; }
+        .line2 { margin-left: 40px; }
+        .line3 { margin-left: 80px; }
+
+        .slogan-box h1 { font-size: 2.2rem; font-weight: 300; color: #f8fafc; letter-spacing: 8px; line-height: 1.6; text-align: left; margin: 0; z-index: 2; }
+        /* 🚨 新增：3D 摇摆探照灯特效（速度加快、向前照射屏幕） */
+        .spotlight-container {
+            position: absolute; top: -50px; left: 50%; transform: translateX(-50%);
+            width: 100%; height: 120vh; pointer-events: none; z-index: 1; display: flex; justify-content: center;
+        }
+        .light-beam {
+            width: 800px; height: 100%;
+            /* 增强光束顶部的浓度，模拟刺眼的探照灯源 */
+            background: linear-gradient(to bottom, rgba(252, 211, 77, 0.6) 0%, rgba(252, 211, 77, 0.15) 60%, transparent 100%);
+            clip-path: polygon(48% 0, 52% 0, 100% 100%, 0% 100%);
+            transform-origin: top center;
+            /* 动画时间缩短到 3秒，摆动速度变快 */
+            animation: sweep3DLight 3s infinite alternate ease-in-out; 
+            filter: blur(15px);
+        }
+        @keyframes sweep3DLight {
+            /* 扫向左侧：光束向后压低（rotateX）、变暗 */
+            0% { transform: perspective(800px) rotateX(50deg) rotateZ(-30deg); opacity: 0.2; }
+            /* 扫向中间：光束抬起直射屏幕前（rotateX接近0）、放大扑面而来（scale）、达到最亮 */
+            50% { transform: perspective(800px) rotateX(5deg) rotateZ(0deg) scale(1.3); opacity: 0.9; }
+            /* 扫向右侧：光束向后压低、变暗 */
+            100% { transform: perspective(800px) rotateX(50deg) rotateZ(30deg); opacity: 0.2; }
+        }
+
+        /* 文案「+1」的高亮特效（保持不变） */
+        .highlight-plus {
+            color: #fcd34d; font-size: 1.4em; font-family: 'Fredoka', sans-serif; font-weight: 800;
+            text-shadow: 0 0 20px rgba(252, 211, 77, 0.8); display: inline-block;
+            transform: translateY(5px) rotate(-5deg); 
+        }
+
+        section.portfolio-item { padding-top: 80px; padding-bottom: 40px; min-height: 60vh; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        h2 { font-size: 1.4rem; font-weight: 400; color: #94a3b8; margin-bottom: 30px; }
+        footer { padding: 80px 0 40px 0; text-align: center; color: #475569; font-size: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* --- 01 影像叙事：升降悬浮版 --- */
+        .sticky-wrapper { height: 400vh !important; position: relative; padding: 0 !important; border: none !important; }
+        .sticky-content { position: sticky; top: 100px; height: calc(100vh - 120px); width: 100%; overflow: hidden; display: flex; flex-direction: column; }
+        .section-header-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 30px; padding-right: 20px; }
+        .title-group { display: flex; align-items: baseline; }
+        .title-group h2 { font-size: 2rem; font-weight: 300; color: #f8fafc; margin: 0; }
+        .title-group .en-title { font-size: 1rem; color: #64748b; letter-spacing: 4px; margin-left: 20px; font-weight: 600; }
+        .scroll-hint span { font-size: 0.85rem; color: #94a3b8; letter-spacing: 2px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+        .carousel-track { display: flex; width: max-content; padding-left: 20px; padding-right: 5vw; will-change: transform; }
+        .project-card { width: 85vw; max-width: 1300px; aspect-ratio: 16 / 9; margin-right: 15vw; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .video-container { position: relative; width: 100%; height: 100%; background: #000; }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; }
+        
+        .play-hint { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 4rem; color: #fcd34d; opacity: 0.8; pointer-events: none; text-shadow: 0 0 20px rgba(252, 211, 77, 0.5); transition: opacity 0.3s ease; z-index: 11; }
+
+        /* 顶部文字遮罩 */
+        .project-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; padding: 40px; 
+            background: linear-gradient(to bottom, rgba(11,19,32, 0.95) 0%, rgba(11,19,32, 0) 100%); 
+            box-sizing: border-box; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); 
+            pointer-events: none; z-index: 5;
+        }
+        .overlay-details { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); pointer-events: auto; }
+        .project-card:hover .project-overlay { 
+            background: linear-gradient(to bottom, rgba(11,19,32, 0.95) 0%, rgba(11,19,32, 0.8) 60%, rgba(11,19,32, 0) 100%); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); pointer-events: auto; 
+        }
+        .project-card:hover .overlay-details { max-height: 400px; opacity: 1; margin-top: 20px; }
+        .overlay-header, .overlay-details, .tags { pointer-events: auto; }
+        .overlay-header h3 { font-size: 1.8rem; color: #f8fafc; margin: 0 0 15px 0; }
+        .overlay-details p { color: #e2e8f0; font-size: 0.95rem; line-height: 1.8; margin: 0; }
+        .tags { display: flex; gap: 12px; flex-wrap: wrap; }
+        .tags span { font-size: 0.75rem; color: #fcd34d; background: rgba(252, 211, 77, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(252, 211, 77, 0.2); }
+
+        /* --- 02 策略洞察：Bento Grid (便当盒) --- */
+        .module-spacing { margin-top: 150px; padding-bottom: 100px; width: 100%; box-sizing: border-box; }
+        .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 40px; }
+        .bento-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 40px; position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; }
+        .bento-card:hover { transform: translateY(-8px); background: rgba(255, 255, 255, 0.04); border-color: rgba(251, 146, 60, 0.4); box-shadow: 0 15px 35px rgba(251, 146, 60, 0.05); }
+        .card-icon { font-size: 2.5rem; margin-bottom: 20px; }
+        .bento-card h3 { font-size: 1.5rem; color: #f8fafc; margin: 0 0 15px 0; font-weight: 500; }
+        .bento-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin-top: 5px; margin-bottom: 30px; }
+        .bento-card .tags { margin-bottom: 15px; }
+
+        .read-more-btn { margin-top: auto; display: inline-block; color: #fcd34d; text-decoration: none; font-size: 0.9rem; letter-spacing: 1px; border: 1px solid rgba(252, 211, 77, 0.3); padding: 8px 18px; border-radius: 30px; align-self: flex-start; transition: all 0.3s ease; cursor: pointer; }
+        .read-more-btn:hover { background: rgba(252, 211, 77, 0.1); border-color: #fcd34d; }
+
+        .xppen-card, .jiguang-card, .cocacola-card, .spss-card { position: relative; overflow: hidden; background-color: #050a14; }
+        .card-blur-bg { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(8px) brightness(0.6); opacity: 0.6; z-index: 1; transition: transform 0.6s ease, filter 0.6s ease; }
+        .xppen-card .card-blur-bg { background-image: url('bg.jpg'); }
+        .jiguang-card .card-blur-bg { background-image: url('bg2.jpg'); }
+        .cocacola-card .card-blur-bg { background-image: url('bg3.png'); }
+        .spss-card .card-blur-bg { background-image: url('bg4.jpg'); }
+        .xppen-card:hover .card-blur-bg, .jiguang-card:hover .card-blur-bg, .cocacola-card:hover .card-blur-bg, .spss-card:hover .card-blur-bg { transform: scale(1.05); filter: blur(5px) brightness(0.5); }
+        .card-real-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 80%); padding: 40px; margin: -40px; }
+
+        /* ============================================================== */
+        /* 🚨 核心优化：讲演式详情全屏厅公共样式 (结构重构：分离滚动与按钮) */
+        /* ============================================================== */
+        
+        .presentation-modal { 
+            position: fixed; inset: 0; 
+            /* 🚨 修改这里：把原本 0.4 的透明度改成了 0.98，接近纯色背景，彻底解决透底杂乱的问题 */
+            background: rgba(11, 19, 32, 0.98); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); 
+            z-index: 9999; display: none; overflow: hidden; /* 父级锁定不滚动 */
+            box-sizing: border-box; 
+        }
+
+        /* 全新的内层滚动容器：让按钮永远悬浮在画面之上 */
+        .modal-scroll-wrapper { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; z-index: 10; }
+        .modal-scroll-container { max-width: 1200px; margin: 0 auto; padding: 100px 40px; padding-left: 80px; }
+
+        /* 强化右上角 CLOSE 按钮 (永远悬浮固定) */
+        .close-modal-btn { 
+            position: absolute; top: 30px; right: 30px; 
+            background: rgba(11, 19, 32, 0.9); border: 1px solid #fcd34d; color: #fcd34d; 
+            font-size: 0.95rem; font-weight: 600; letter-spacing: 2px; 
+            cursor: pointer; z-index: 1000; padding: 10px 24px; border-radius: 30px; 
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .close-modal-btn:hover { 
+            background: #fcd34d; color: #0b1320; transform: translateY(-3px); 
+            box-shadow: 0 15px 30px rgba(252, 211, 77, 0.3); 
+        }
+
+        /* 极简高级：左侧竖向 BACK 按钮 (永远悬浮贴边) */
+        .back-modal-btn {
+            position: absolute; left: 0; top: 0; bottom: 0; width: 60px;
+            background: rgba(11, 19, 32, 0.6); border-right: 1px solid rgba(255,255,255,0.08);
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 1000; transition: all 0.3s ease;
+        }
+        .back-modal-btn:hover { background: rgba(252, 211, 77, 0.15); border-right-color: rgba(252, 211, 77, 0.4); }
+        .back-modal-text {
+            writing-mode: vertical-lr; transform: rotate(180deg);
+            color: #94a3b8; font-size: 0.9rem; font-weight: 600; letter-spacing: 6px;
+            transition: color 0.3s ease; white-space: nowrap;
+        }
+        .back-modal-btn:hover .back-modal-text { color: #fcd34d; }
+
+        /* ============================================================== */
+
+        .modal-header { margin-bottom: 80px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 40px; }
+        .modal-meta { font-size: 0.8rem; color: #fcd34d; letter-spacing: 3px; display: block; margin-bottom: 15px; }
+        .modal-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .modal-title-row h2 { margin: 0 !important; font-size: 2.2rem; color: #f8fafc; font-weight: 400; }
+        .modal-header p { color: #475569; font-size: 0.95rem; margin: 0; margin-top: 15px; }
+
+        .pdf-download-btn { display: flex; align-items: center; gap: 8px; padding: 10px 22px; background: rgba(252, 211, 77, 0.08); border: 1px solid rgba(252, 211, 77, 0.3); border-radius: 30px; color: #fcd34d; font-size: 0.95rem; letter-spacing: 1px; text-decoration: none; white-space: nowrap; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .pdf-download-btn:hover { background: #fcd34d; color: #0b1320; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(252, 211, 77, 0.25); }
+        .pdf-download-btn svg { width: 18px; height: 18px; } 
+
+        .download-btn-group { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .doc-btn:hover { background: #60a5fa; color: #050a14; border-color: #60a5fa; box-shadow: 0 8px 20px rgba(96, 165, 250, 0.25); }
+        .ppt-btn:hover { background: #f87171; color: #050a14; border-color: #f87171; box-shadow: 0 8px 20px rgba(248, 113, 113, 0.25); }
+
+        .presentation-row { display: flex; align-items: center; gap: 60px; margin-bottom: 120px; }
+        .row-narrative { flex: 1; }
+        .slide-num { font-size: 0.8rem; color: #475569; font-family: monospace; display: block; margin-bottom: 10px; }
+        .row-narrative h4 { font-size: 1.4rem; color: #f8fafc; margin: 0 0 15px 0; font-weight: 500; line-height: 1.5; }
+        .row-narrative p { color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin: 0; }
+        .row-visual { flex: 1.3; }
+        .slide-placeholder-img { width: 100%; aspect-ratio: 16 / 9; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .slide-placeholder-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .interactive-image-stack { width: 100%; aspect-ratio: 16 / 9; position: relative !important; cursor: pointer; z-index: 100; }
+        .stack-card { position: absolute; inset: 0; background: #0b1320; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; display: flex; justify-content: center; align-items: center; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); transform-origin: bottom center; }
+        .stack-card[data-index="0"] { z-index: 10; transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
+        .stack-card[data-index="1"] { z-index: 5; transform: scale(0.93) translateY(-18px) rotate(3deg); opacity: 0.4; }
+        .interactive-image-stack:hover .stack-card[data-index="1"] { transform: scale(0.95) translateY(-26px) rotate(5deg); opacity: 0.7; }
+        .stack-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .click-tip { display: inline-block; margin-top: 20px; font-size: 0.8rem; color: #fcd34d; background: rgba(252, 211, 77, 0.04); border: 1px solid rgba(252, 211, 77, 0.1); padding: 5px 14px; border-radius: 4px; letter-spacing: 1px; }
+
+        .editorial-row { display: flex; align-items: center; gap: 60px; margin-bottom: 120px; }
+        .editorial-row.reverse-row { flex-direction: row-reverse; }
+        .editorial-text { flex: 1; }
+        .editorial-visual-single { flex: 1.2; aspect-ratio: 16 / 9; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; display: flex; justify-content: center; align-items: center; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .editorial-visual-single img { width: 100%; height: 100%; object-fit: cover; }
+        .editorial-bento-gallery { flex: 1.4; display: grid; grid-template-columns: 1fr 1.2fr; grid-template-rows: 200px 200px; gap: 20px; }
+        .bento-vi { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
+        .bento-vi img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .bento-vi:hover img { transform: scale(1.08); }
+        .item-logo { grid-column: 1; grid-row: 1; }
+        .item-ip { grid-column: 1; grid-row: 2; }
+        .item-product { grid-column: 2; grid-row: 1 / 3; }
+
+        .coke-presentation-block { display: flex; flex-direction: column; gap: 40px; margin-bottom: 100px; }
+        .slider-container { width: 100%; overflow: hidden; position: relative; padding: 30px 0; }
+        .slider-track { display: flex; gap: 40px; width: max-content; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); padding: 0 10px; }
+        .slider-card { width: 750px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 35px; display: flex; gap: 35px; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2); transition: transform 0.4s ease, border-color 0.4s ease; }
+        .slider-card:hover { border-color: rgba(252, 211, 77, 0.2); transform: translateY(-5px); }
+        .slider-card-text { flex: 1; }
+        .slider-card-visual { flex: 1.2; aspect-ratio: 4 / 3; background: rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); display: flex; justify-content: center; align-items: center; }
+        .slider-card-visual img { width: 100%; height: 100%; object-fit: cover; }
+        .slider-nav-row { display: flex; justify-content: flex-end; gap: 20px; margin-top: -10px; }
+        /* 🚨 优化后的可口可乐左右切换按钮（更显眼、带动画） */
+        .slider-arrow-btn { 
+            width: 50px; height: 50px; border-radius: 50%; 
+            border: 1px solid rgba(252, 211, 77, 0.4); background: rgba(252, 211, 77, 0.15); 
+            color: #fcd34d; font-size: 1.5rem; font-weight: bold; 
+            display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; transition: all 0.3s ease; user-select: none; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+        }
+        .slider-arrow-btn:hover { 
+            border-color: #fcd34d; color: #0b1320; background: #fcd34d; 
+            transform: scale(1.1); box-shadow: 0 8px 20px rgba(252, 211, 77, 0.4); 
+        }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 80px; }
+        .dash-panel { background: rgba(11, 19, 32, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; display: flex; flex-direction: column; gap: 25px; position: relative; overflow: hidden; }
+        .panel-blue::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #60a5fa; }
+        .panel-orange::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #fb923c; }
+        .panel-header h3 { font-size: 1.6rem; color: #f8fafc; margin: 10px 0; }
+        .panel-id { font-family: 'Courier New', monospace; font-size: 0.8rem; letter-spacing: 2px; color: #64748b; }
+        .method-tags { display: flex; gap: 8px; margin-top: 10px; }
+        .method-tags span { font-size: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px; color: #cbd5e1;}
+        .metrics-row { display: flex; justify-content: space-between; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 25px; border: 1px solid rgba(255,255,255,0.03); }
+        .metric-box { display: flex; flex-direction: column; align-items: flex-start; }
+        .metric-label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
+        .metric-value { font-family: 'Courier New', monospace; font-size: 2.2rem; font-weight: 800; color: #f8fafc; line-height: 1; text-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        .panel-blue .metric-value { color: #93c5fd; }
+        .panel-orange .metric-value { color: #fdba74; }
+        .panel-body h4 { color: #e2e8f0; font-size: 1.1rem; border-left: 3px solid #fcd34d; padding-left: 10px; margin-bottom: 15px; }
+        .panel-body p { color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin-bottom: 15px; }
+        .highlight-insight { background: rgba(252, 211, 77, 0.05); border: 1px solid rgba(252, 211, 77, 0.2); padding: 15px 20px; border-radius: 8px; color: #fcd34d !important; font-weight: 500; }
+        .dash-visual-box { width: 100%; height: 220px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-top: 25px; overflow: hidden; }
+        .dash-visual-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .master-campaign-card { background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 40px; display: flex; justify-content: space-between; align-items: center; gap: 40px; margin-top: 40px; transition: transform 0.4s ease, border-color 0.4s ease; }
+        .master-campaign-card:hover { transform: translateY(-5px); border-color: rgba(236, 72, 153, 0.4); box-shadow: 0 15px 35px rgba(236, 72, 153, 0.05); }
+        .campaign-content { flex: 1.5; }
+        .campaign-content h3 { font-size: 1.8rem; color: #f8fafc; margin: 0 0 15px 0; font-weight: 500; }
+        .campaign-content p { color: #94a3b8; font-size: 1rem; line-height: 1.8; margin-top: 15px; }
+        .campaign-data { flex: 1; display: flex; flex-direction: column; gap: 20px; background: rgba(0, 0, 0, 0.2); padding: 30px; border-radius: 16px; border-left: 3px solid #ec4899; }
+        .data-item { display: flex; flex-direction: column; }
+        .data-num { font-size: 2.2rem; font-weight: 800; font-family: 'Fredoka', sans-serif; color: #f8fafc; line-height: 1; margin-bottom: 5px; }
+        .data-label { font-size: 0.85rem; color: #64748b; letter-spacing: 1px; text-transform: uppercase; }
+        .sub-section-title { margin-top: 60px; margin-bottom: 30px; font-size: 1.2rem; color: #e2e8f0; font-weight: 400; letter-spacing: 2px; }
+
+        .social-feed-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .feed-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 16px; padding: 30px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .feed-card:hover { background: rgba(255, 255, 255, 0.05); transform: translateY(-5px); }
+        .feed-platform { display: inline-block; font-size: 0.75rem; color: #0b1320; background: #fcd34d; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-bottom: 20px; }
+        .feed-card h4 { font-size: 1.2rem; color: #f8fafc; margin: 0 0 15px 0; font-weight: 500; }
+        .feed-card p { color: #8492a6; font-size: 0.9rem; line-height: 1.7; margin: 0; }
+        .feed-card strong { color: #ec4899; font-weight: 600; }
+
+        .douyin-profile-card { text-decoration: none; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-color: rgba(254, 44, 85, 0.3) !important; background: linear-gradient(135deg, rgba(254,44,85,0.05) 0%, rgba(37,244,238,0.05) 100%) !important; cursor: pointer; }
+        .douyin-profile-card:hover { border-color: rgba(254, 44, 85, 0.8) !important; box-shadow: 0 10px 30px rgba(254, 44, 85, 0.15) !important; }
+        .douyin-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #fe2c55; padding: 3px; margin-bottom: 15px; overflow: hidden; background: #0b1320; }
+        .douyin-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .douyin-profile-card h4 { font-size: 1.3rem; margin: 0 0 10px 0; color: #f8fafc; }
+        .douyin-profile-card p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px; line-height: 1.6; }
+        .go-douyin-btn { background: #fe2c55; color: #ffffff; padding: 8px 24px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; transition: all 0.3s ease; }
+        .douyin-profile-card:hover .go-douyin-btn { background: #e0244c; transform: scale(1.05); }
+
+        .timeline-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 40px; }
+        .timeline-item { display: flex; flex-direction: column; gap: 15px; }
+        .item-meta { font-size: 0.75rem; color: #64748b; letter-spacing: 2px; font-weight: 600; }
+        
+        .design-booklet:hover .hover-read-tip, .poster-stack:hover .hover-read-tip, .official-account:hover .hover-read-tip { opacity: 1 !important; }
+        
+        .item-preview-box { width: 100%; height: 240px; background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; }
+        .item-preview-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .timeline-item:hover img { transform: scale(1.05); }
+        .stack-layer { position: absolute; border-radius: 8px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+        .layer-3 { width: 85%; height: 85%; top: 0; transform: rotate(-4deg); }
+        .layer-2 { width: 90%; height: 90%; top: 10px; transform: rotate(3deg); }
+        .main-poster { width: 95%; height: 95%; top: 20px; background: #0b1320; display: flex; justify-content: center; align-items: center; border: none; }
+        .timeline-item:hover .layer-3 { transform: translate(-10px, -5px) rotate(-8deg); }
+        .timeline-item:hover .layer-2 { transform: translate(10px, -2px) rotate(6deg); }
+        .placeholder-text { color: #475569; font-size: 0.85rem; letter-spacing: 1px; text-align: center; padding: 20px; }
+        .item-brief h4 { font-size: 1.15rem; color: #f8fafc; margin: 0 0 8px 0; font-weight: 500; }
+        .item-brief p { color: #64748b; font-size: 0.85rem; line-height: 1.6; margin: 0; }
+
+        .lightbox-modal { position: fixed; inset: 0; background: rgba(5, 10, 20, 0.3); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 10000; display: none; justify-content: center; align-items: center; }
+        .lightbox-content { width: 75vw; max-width: 1000px; height: 65vh; background: #0f172a; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; position: relative; display: flex; flex-direction: column; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transform: scale(0.95); opacity: 0; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .lightbox-modal.is-open .lightbox-content { transform: scale(1); opacity: 1; }
+        .lightbox-close-btn { position: absolute; top: 15px; right: 15px; width: 35px; height: 35px; border-radius: 50%; background: rgba(255,255,255,0.05); color: #94a3b8; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; z-index: 10; }
+        .lightbox-close-btn:hover { background: #fcd34d; color: #0b1320; }
+        .lightbox-header { text-align: center; margin-bottom: 15px; }
+        .lightbox-header h3 { font-size: 1.4rem; color: #f8fafc; margin: 0 0 5px 0; }
+        .lightbox-header p { color: #64748b; font-size: 0.85rem; margin: 0; letter-spacing: 1px; }
+
+        .booklet-gallery-container { flex: 1; width: 100%; display: flex; align-items: center; overflow: hidden; }
+        .booklet-track { display: flex; gap: 30px; padding: 0 2vw; width: 100%; height: 90%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+        .booklet-track::-webkit-scrollbar { display: none; }
+        .booklet-track { -ms-overflow-style: none; scrollbar-width: none; }
+        .booklet-page { flex-shrink: 0; height: 100%; aspect-ratio: 1.414 / 1; scroll-snap-align: center; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); background: #fff; opacity: 0; transform: translateX(60px); }
+        .booklet-page img { width: 100%; height: 100%; object-fit: contain; }
+
+        .lightbox-modal.is-open .booklet-page { animation: unfoldGallery 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .lightbox-modal.is-open .booklet-page:nth-child(1) { animation-delay: 0.2s; }
+        .lightbox-modal.is-open .booklet-page:nth-child(2) { animation-delay: 0.3s; }
+        .lightbox-modal.is-open .booklet-page:nth-child(3) { animation-delay: 0.4s; }
+        .lightbox-modal.is-open .booklet-page:nth-child(4) { animation-delay: 0.5s; }
+        .lightbox-modal.is-open .booklet-page:nth-child(5) { animation-delay: 0.6s; }
+        .lightbox-modal.is-open .booklet-page:nth-child(6) { animation-delay: 0.7s; }
+        @keyframes unfoldGallery { to { opacity: 1; transform: translateX(0); } }
+
+        .booklet-arrow-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(11, 19, 32, 0.8); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: all 0.3s ease; user-select: none; }
+        .booklet-arrow-btn:hover { border-color: #fcd34d; color: #fcd34d; background: rgba(252, 211, 77, 0.1); }
+        .booklet-prev-btn { left: 10px; }
+        .booklet-next-btn { right: 10px; }
+
+        .poster-gallery-container { flex: 1; width: 100%; display: flex; align-items: center; overflow: hidden; position: relative; }
+        .poster-track { display: flex; gap: 20px; padding: 0 20px; width: 100%; overflow-x: auto; scroll-behavior: smooth; align-items: center; padding-bottom: 20px; }
+        .poster-track::-webkit-scrollbar { height: 6px; }
+        .poster-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+        .poster-track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        .poster-card { height: 45vh; border-radius: 8px; cursor: zoom-in; object-fit: contain; box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: transform 0.3s ease, filter 0.3s ease; opacity: 0; transform: translateY(150px) rotate(15deg) scale(0.8); }
+        .poster-card:hover { transform: translateY(-10px) scale(1.05) !important; filter: brightness(1.1); z-index: 5; }
+
+        .lightbox-modal.is-open .poster-card { animation: dealCard 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .lightbox-modal.is-open .poster-card:nth-child(1) { animation-delay: 0.1s; }
+        .lightbox-modal.is-open .poster-card:nth-child(2) { animation-delay: 0.2s; }
+        .lightbox-modal.is-open .poster-card:nth-child(3) { animation-delay: 0.3s; }
+        .lightbox-modal.is-open .poster-card:nth-child(4) { animation-delay: 0.4s; }
+        .lightbox-modal.is-open .poster-card:nth-child(5) { animation-delay: 0.5s; }
+        .lightbox-modal.is-open .poster-card:nth-child(6) { animation-delay: 0.6s; }
+        .lightbox-modal.is-open .poster-card:nth-child(7) { animation-delay: 0.7s; }
+        .lightbox-modal.is-open .poster-card:nth-child(8) { animation-delay: 0.8s; }
+        @keyframes dealCard { to { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); } }
+
+        .poster-spotlight { position: absolute; inset: 0; background: rgba(11,19,32,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .poster-spotlight.show { opacity: 1; pointer-events: auto; cursor: zoom-out; }
+        .poster-spotlight img { max-height: 80%; max-width: 90%; border-radius: 6px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .poster-spotlight.show img { transform: scale(1); }
+        .close-spotlight-tip { color: #94a3b8; margin-top: 20px; font-size: 0.9rem; letter-spacing: 2px; animation: pulse 2s infinite; }
+
+        .wechat-modal-content { max-width: 1300px !important; width: 90vw !important; height: 85vh !important; flex-direction: row !important; gap: 40px; padding: 40px !important; }
+        .wechat-left-pane { display: flex; justify-content: center; align-items: center; }
+        .phone-mockup { width: 280px; height: 580px; border-radius: 40px; border: 12px solid #1e293b; background: #000; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 25px; background: #1e293b; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 10; }
+        .phone-mockup img, .phone-mockup video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .wechat-right-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; justify-content: center; }
+        .wechat-header { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .wechat-video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-content: center; }
+        .wechat-video-item { display: flex; flex-direction: column; gap: 12px; }
+        .video-wrapper { width: 100%; aspect-ratio: 16 / 9; position: relative; border-radius: 10px; overflow: hidden; background: #000; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s ease, border-color 0.3s ease; }
+        .video-wrapper:hover { transform: translateY(-5px); border-color: #fcd34d; }
+        .video-wrapper video { width: 100%; height: 100%; object-fit: cover; } 
+        .video-wrapper .play-icon { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-size: 2rem; color: rgba(255,255,255,0.8); opacity: 0; transition: opacity 0.3s ease; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .video-wrapper:hover .play-icon { opacity: 1; }
+        .view-article-btn { text-align: center; color: #fcd34d; text-decoration: none; font-size: 0.85rem; letter-spacing: 1px; border: 1px solid rgba(252, 211, 77, 0.3); border-radius: 20px; padding: 6px 0; transition: all 0.3s ease; }
+        .view-article-btn:hover { background: rgba(252, 211, 77, 0.1); }
+        .video-spotlight { position: absolute; inset: 0; background: rgba(5,10,20,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .video-spotlight.show { opacity: 1; pointer-events: auto; }
+        .video-spotlight video { max-width: 90%; max-height: 85%; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); transform: scale(0.9); transition: transform 0.4s ease; outline: none; }
+        .video-spotlight.show video { transform: scale(1); }
+        .close-vid-spotlight-btn { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2rem; cursor: pointer; transition: color 0.3s ease; }
+        .close-vid-spotlight-btn:hover { color: #fcd34d; }
+
+        /* 12 张图堆叠淡入淡出动画 */
+        .multi-image-stack img.stack-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; transition: opacity 0.4s ease; z-index: 1;
+        }
+        .multi-image-stack img.stack-img.active {
+            opacity: 1; z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🚨 新增：破晓日出特效的底层画布 -->
+    <div id="bg-base" style="position: fixed; inset: 0; z-index: -3; background: #0b1320;"></div>
+    <!-- 蓝调破晓层 (加深了蓝色光晕) -->
+    <div id="bg-dawn" style="position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.5) 0%, rgba(30, 58, 138, 0.2) 50%, #0b1320 100%); opacity: 0; transition: opacity 0.2s ease-out;"></div>
+    <!-- 金色日出层 (加深了橙色和粉色光晕) -->
+    <div id="bg-sunrise" style="position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 100%, rgba(251, 146, 60, 0.6) 0%, rgba(236, 72, 153, 0.3) 50%, transparent 100%); opacity: 0; transition: opacity 0.2s ease-out;"></div>
+
+    <header>
+        <div class="logo">WANG JIAYI.</div> 
+        <nav>
+            <ul>
+                <li><a href="#visual-storytelling">影像叙事</a></li>
+                <li><a href="#strategy-insight">策略洞察</a></li>
+                <li><a href="#content-strategy">内容策划</a></li>
+                <li><a href="#visual-communication">视觉传达</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 🚨 第一屏：打招呼与摇摆探照灯 -->
+        <div class="hero" style="position: relative;">
+            
+            <!-- 🌟 摇摆探照灯 -->
+            <div class="spotlight-container">
+                <div class="light-beam"></div>
+            </div>
+
+            <div class="greeting">
+                <div class="line1"><span class="char">H</span><span class="char">e</span><span class="char">l</span><span class="char">l</span><span class="char">o</span><span class="char">,</span></div>
+                <div class="line2"><span class="char">I</span><span class="char">'</span><span class="char">m</span></div>
+                <div class="line3"><span class="char">W</span><span class="char">a</span><span class="char">n</span><span class="char">g</span><span class="char">J</span><span class="char">i</span><span class="char">a</span><span class="char">Y</span><span class="char">i</span></div>
+            </div>
+            
+            <!-- 🌟 更新：文字左对齐 & 高亮 +1 -->
+            <div class="slogan-box" style="z-index: 3;">
+                <h1>探索不设限，<br>期待每一次的 <span class="highlight-plus">「+1」</span>。</h1>
+            </div>
+            
+        </div>
+
+        <!-- 01 影像叙事 -->
+        <section id="visual-storytelling" class="portfolio-item sticky-wrapper">
+            <div class="sticky-content">
+                <div class="section-header-row">
+                    <div class="title-group">
+                        <h2>01 / 影像叙事</h2>
+                        <span class="en-title">VISUAL STORYTELLING</span>
+                    </div>
+                    <div class="scroll-hint"><span>↓ 继续向下滚动，自动探索下一个作品 ↓</span></div>
+                </div>
+
+                <div class="carousel-track">
+                    <div class="project-card">
+                        <div class="video-container">
+                            <video id="my-video-1" src="影像1.mp4" autoplay muted loop playsinline controls></video>
+                            <div class="click-catcher" style="position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 60px); z-index: 10; cursor: pointer;"></div>
+                            <div class="play-hint">▶</div>
+                        </div>
+                        <div class="project-overlay">
+                            <div class="overlay-header">
+                                <h3>《二三事》</h3>
+                                <div class="tags"><span>前期调研拆解</span><span>突发危机应对</span><span>视听情绪编排</span><span>双项大奖作品</span></div>
+                            </div>
+                            <div class="overlay-details">
+                                <p>这部作品记录了一位程序员回到家乡转型开西餐厅的真实经历。最初我计划用他与合伙人分道扬镳作为核心冲突，但实拍时发现受访者心理包袱过重。面对主线缺失的危机，我果断调整策略，转而挖掘他在热闹餐厅背后属于个人的孤独底色。我在剪辑时放缓了空镜节奏，用轻盈的风铃画面与爱尔兰哨笛声去中和现实梦想的沉重。这段经历让我体会到，好的策划绝不是死磕预设剧本，而是敏锐捕捉真实反馈并迅速调整表达策略。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="video-container">
+                            <video id="my-video-2" src="影像2.mp4" autoplay muted loop playsinline controls></video>
+                            <div class="click-catcher" style="position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 60px); z-index: 10; cursor: pointer;"></div>
+                            <div class="play-hint">▶</div>
+                        </div>
+                        <div class="project-overlay">
+                            <div class="overlay-header">
+                                <h3>悬疑短片《活着》 提前调低音量~</h3>
+                                <div class="tags"><span>交叉蒙太奇</span><span>创意脚本撰写</span></div>
+                            </div>
+                            <div class="overlay-details">
+                                <p>此短片是我在营造恐怖氛围上的一次尝试。在叙事结构上，我选择了交叉蒙太奇来呈现并行的危机感；在声音构思上，则致敬了《杀死比尔》的口哨元素，又加入了刀片滑动的声音，试图用反差感的音效来烘托压抑的环境。希望通过视听层面的细节编排，呈现出属于我自己的影像表达。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 02 策略洞察 -->
+        <section id="strategy-insight" class="portfolio-item module-spacing">
+            <div class="section-header-row">
+                <div class="title-group">
+                    <h2>02 / 策略洞察</h2>
+                    <span class="en-title">STRATEGY & INSIGHT</span>
+                </div>
+            </div>
+
+            <div class="bento-grid">
+                <div class="bento-card xppen-card">
+                    <div class="card-blur-bg"></div>
+                    <div class="card-real-content">
+                        <div class="card-icon">🎯</div>
+                        <h3>《XPPen营销策划案》</h3>
+                        <div class="tags"><span>Z世代洞察</span><span>情绪价值营销</span><span>圈层破圈</span></div>
+                        <p>面对XPPen在国内知名度不足的现状，本案尝试从Z世代渴望群体认同的“门派”亚文化中寻找突破口，提出“X门永存”的营销设想。我们计划打通线上游戏互动与线下快闪体验，旨在将XPPen“快、稳、准”的硬核参数转化为能与年轻人共情的情感符号，为品牌重塑年轻化形象提供一种创新思路。</p>
+                        <a href="javascript:void(0);" class="read-more-btn open-xppen-modal">查看完整方案 ↗</a>
+                    </div>
+                </div>
+
+                <div class="bento-card jiguang-card">
+                    <div class="card-blur-bg"></div>
+                    <div class="card-real-content">
+                        <div class="card-icon">💡</div>
+                        <h3>《会昌桔柚项目计划书》</h3>
+                        <div class="tags"><span>产业链重构</span><span>商业模式创新</span><span>数字化助农</span></div>
+                        <p>针对传统会昌桔柚“丰产不增收”的困境，本案构建了拓宽NFC果汁、精油等高附加值产品线的商业模式。在这份团队策划案中，我主要承担了产品平面设计落地工作，包括Logo绘制、IP设定以及各产品线的包装制作，努力将团队抽象的商业构想转化为直观可见的视觉画面。</p>
+                        <a href="javascript:void(0);" class="read-more-btn open-jiguang-modal">查看完整方案 ↗</a>
+                    </div>
+                </div>
+
+                <div class="bento-card sub-card cocacola-card">
+                    <div class="card-blur-bg"></div>
+                    <div class="card-real-content">
+                        <div class="card-icon">📊</div>
+                        <h3>《可口可乐AIGC广告受众认知分析》</h3>
+                        <div class="tags"><span>Python数据挖掘</span><span>LDA主题模型</span><span>消费者洞察</span></div>
+                        <p>以可口可乐2025年圣诞AIGC广告为研究对象，运用AI模型生成代码，调用API抓取超万条YouTube真实评论。通过数据清洗、分词去噪，结合高频词统计与LDA无监督主题建模，拆解受众潜在认知。研究精准洞察到受众在面对AI广告时，相较于技术，更在意品牌的真实感与情感温度。</p>
+                        <a href="javascript:void(0);" class="read-more-btn open-coke-modal">查看分析报告 ↗</a>
+                    </div>
+                </div>
+
+                <div class="bento-card sub-card spss-card">
+                    <div class="card-blur-bg"></div>
+                    <div class="card-real-content">
+                        <div class="card-icon">💻</div>
+                        <h3>《广告效果评估》</h3>
+                        <div class="tags"><span>问卷调查</span><span>SPSS数据分析</span><span>数据归因</span></div>
+                        <p>严谨的数据能够透过表象看实质，精准反映受众的真实意愿与营销动作背后的客观规律。在这里，我将展示两个量化实操项目：我在2023年进行的《火星演唱会》受众意愿调查以及2024年关于《元梦之星》的广告效果评估。这两个项目分别侧重于 SPSS 统计分析的深度应用与专业问卷量表的设计优化。</p>
+                        <a href="javascript:void(0);" class="read-more-btn open-spss-modal">启动数据看板 ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 03 内容策划 -->
+        <section id="content-strategy" class="portfolio-item module-spacing">
+            <div class="section-header-row">
+                <div class="title-group">
+                    <h2>03 / 内容策划</h2>
+                    <span class="en-title">CONTENT STRATEGY & OPERATION</span>
+                </div>
+            </div>
+
+            <div class="master-campaign-card">
+                <div class="campaign-content">
+                    <div class="card-icon">🔥</div>
+                    <h3>《“民俗风”江西特产：整合营销》</h3>
+                    <div class="tags"><span>全域矩阵操盘</span><span>直播带货</span><span>新媒体运营</span><span>O2O闭环营销</span></div>
+                    <p>这是一个涵盖市场洞察、社媒矩阵孵化到直播变现的完整团队实战项目。我们小组在四大平台共产出90余篇内容，抖音互动话题达4.5万次播放量。在这个项目中，我作为抖音渠道的核心运营之一，深度参与了短视频的从0到1起号，并重点负责了单月直播带货的具体执行，最终收获了企业的实习认可。</p>
+                    <a href="javascript:void(0);" class="read-more-btn open-minsu-modal" style="margin-top: 25px;">查看整合营销全案 ↗</a>
+                </div>
+                <div class="campaign-data">
+                    <div class="data-item"><span class="data-num">90+</span><span class="data-label">全网高频内容爆款</span></div>
+                    <div class="data-item"><span class="data-num">45,000+</span><span class="data-label">互动话题播放量</span></div>
+                    <div class="data-item"><span class="data-num">4 大</span><span class="data-label">主流社媒渠道覆盖</span></div>
+                </div>
+            </div>
+
+            <h4 class="sub-section-title">✨ UGC共创 (Social & UGC)</h4>
+            
+            <div class="social-feed-grid">
+    <!-- 🚨 把 div 换成了 a 标签，加上了链接属性和鼠标变小手的手势 -->
+    <a href="https://www.douyin.com/user/MS4wLjABAAAAYA29bSajLNOdctsNzZwotn4F6unKLpbIDLJKcy9NP88pIiEZ5rJU4RXuQRPsjoxP?from_tab_name=main" target="_blank" class="feed-card" style="text-decoration: none; display: flex; flex-direction: column; cursor: pointer;">
+        <div class="feed-platform">抖音</div>
+        <h4>双鹿电池青年号：校园爆款制造机</h4>
+        <p style="color: #8492a6;">独立负责“双鹿青年路透社”内容体系搭建。精准定位青年搞笑日常与热点二创，包揽脚本撰写、拍摄、剪辑及包装。运营期间打造多支爆款，单条最高点赞900+，全网累计播放量超<strong>30万+</strong>，有效实现了传统品牌的年轻化破圈。</p>
+        
+        <!-- 🚨 底部新增一个抖音品牌色的跳转提示 -->
+        <span style="margin-top: auto; padding-top: 15px; color: #fe2c55; font-size: 0.9rem; font-weight: 600;">点击前往抖音主页 ↗</span>
+    </a>
+
+                <div class="feed-card">
+                    <div class="feed-platform">抖音</div>
+                    <h4>头部品牌 UGC 创意共创</h4>
+                    <p>高度活跃于社交内容前沿，深度参与<strong>可比克、a2奶粉</strong>等快消品牌的 UGC 内容创作。精准把握Z世代网感与品牌诉求的平衡点，通过短视频产出高趣味性、高传播度的原生广告内容，展现极强的热点捕捉与造梗能力。</p>
+                </div>
+
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA8Niz6z_9Cr4nyYtdjwQovqAZJBWLzPzy2W-NkKXEdXvGqn9dveiAO4d4dICmBloZ?from_tab_name=main" target="_blank" class="feed-card douyin-profile-card">
+                    <div class="douyin-avatar">
+                        <img src="抖音头像.jpeg" alt="我的抖音头像">
+                    </div>
+                    <h4>@什锦味大杂烩</h4>
+                    <p>点击直达我的抖音主页，查看更多爆款短视频与实战 UGC 创作日常 🚀</p>
+                    <span class="go-douyin-btn">立即前往抖音 ↗</span>
+                </a>
+            </div>
+        </section>
+        
+        <!-- 04 视觉传达 -->
+        <section id="visual-communication" class="portfolio-item module-spacing">
+            <div class="section-header-row">
+                <div class="title-group">
+                    <h2>04 / 视觉传达</h2>
+                    <span class="en-title">VISUAL COMMUNICATION & CREATIVE SIDE</span>
+                </div>
+            </div>
+
+            <div class="timeline-grid">
+                
+                <div class="timeline-item">
+                    <div class="item-meta">PROJECT 01 / 电脑图文设计</div>
+                    <div class="item-preview-box design-booklet open-booklet-modal" style="cursor: pointer; position: relative;">
+                        <img src="画板 1.jpg" alt="画册封面">
+                        <div class="hover-read-tip" style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; color: #fcd34d; font-weight: 600; letter-spacing: 2px;">
+                            🔍 点击翻阅完整画册
+                        </div>
+                    </div>
+                    <div class="item-brief">
+                        <h4>《印象文昌里》古建筑旅游景点画册</h4>
+                        <p>运用栅格系统进行地方文化视觉叙事，包含封面及5页完整内页排版，斩获高分课程作品，展现扎实的版式编排功底。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="item-meta">PROJECT 02 / 平面海报作品</div>
+                    <div class="item-preview-box poster-stack open-poster-modal" style="cursor: pointer; position: relative;">
+                        <div class="stack-layer layer-3" style="background-image: url('海报3.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="stack-layer layer-2" style="background-image: url('海报2.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="stack-layer main-poster" style="background-image: url('海报封面.jpg'); background-size: cover; background-position: center; border: none;"></div>
+                        <div class="hover-read-tip" style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; color: #fcd34d; font-weight: 600; letter-spacing: 2px;">
+                            🃏 点击展开海报画廊
+                        </div>
+                    </div>
+                    <div class="item-brief">
+                        <h4>创意平面海报</h4>
+                        <p>大学期间课程项目与日常实战的平面海报集合，涵盖快消、餐饮等多品类命题。展现核心创意视觉化能力。</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="item-meta">PROJECT 03 / 公众号运营</div>
+                    <div class="item-preview-box official-account open-wechat-modal" style="cursor: pointer; position: relative;">
+                        <img src="公众号封面.jpg" alt="疯狂的卷毛姐公众号封面">
+                        <div class="hover-read-tip" style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; color: #fcd34d; font-weight: 600; letter-spacing: 2px;">
+                            📱 点击开启公众号矩阵视窗
+                        </div>
+                    </div>
+                    <div class="item-brief">
+                        <h4>8期科普长图文自媒体系列排版</h4>
+                        <p>独立负责 8 期科普系列长图文公众号的视觉风格定义、版式设计及信息可视化。将复杂的科普信息转化为轻量、易读、美观的移动端视觉文本。</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+   <!-- 🚨 新增：05 留言互动专区 -->
+        <section id="feedback-section" class="portfolio-item module-spacing" style="max-width: 800px; margin: 0 auto; padding-top: 50px;">
+            <div class="section-header-row" style="justify-content: center; text-align: center; margin-bottom: 40px;">
+                <div class="title-group" style="display: flex; flex-direction: column; align-items: center;">
+                    <h2 style="font-size: 2rem; color: #fcd34d; margin-bottom: 10px; border: none;">05 / 留下您的回音</h2>
+                    <p style="color: #94a3b8; font-size: 0.95rem; letter-spacing: 1px;">任何意见、建议或面试交流，都期待您的驻足与指正</p>
+                </div>
+            </div>
+
+            <!-- 输入区 -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <input type="text" id="comment-name" placeholder="您的称呼 / 联系方式 (选填)" style="width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; color: #fff; margin-bottom: 20px; font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.3s ease;">
+                <textarea id="comment-content" rows="4" placeholder="写下您的评价或建议..." style="width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 8px; color: #fff; margin-bottom: 20px; font-family: inherit; font-size: 0.95rem; resize: vertical; outline: none; transition: border-color 0.3s ease;"></textarea>
+                <button id="submit-comment" style="background: #fcd34d; color: #0b1320; border: none; padding: 14px 30px; border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; width: 100%; box-shadow: 0 5px 15px rgba(252, 211, 77, 0.2);">发送留言 🚀</button>
+            </div>
+
+            <!-- 留言展示墙 (已清空) -->
+            <div id="comment-list" style="margin-top: 40px; display: flex; flex-direction: column; gap: 20px;">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>📬 期待与您交流：wjy_ad2026@163.com</p>
+    </footer>
+
+    <!-- ================= 弹窗集合地 ================= -->
+
+    <div id="xppen-detail-modal" class="presentation-modal">
+        <!-- 🚨 左侧返回按钮 -->
+        <div class="close-xppen-btn back-modal-btn"><span class="back-modal-text">◀ BACK</span></div>
+        <!-- 🚨 悬浮右上角大关闭按钮 -->
+        <div class="close-xppen-btn close-modal-btn">✕ CLOSE</div>
+        
+        <div class="modal-scroll-wrapper">
+            <div class="modal-scroll-container">
+                <div class="modal-header">
+                    <span class="modal-meta">CASE STUDY / STRATEGY ANALYSIS</span>
+                    <div class="modal-title-row">
+                        <h2>XPPen “X门永存” 营销策划案</h2>
+                        <a href="xppen_proposal.pdf" target="_blank" class="pdf-download-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            完整版策划案
+                        </a>
+                    </div>
+                </div>
+
+                <div class="presentation-row">
+                    <div class="row-narrative">
+                        <span class="slide-num">01 / 痛点与任务</span>
+                        <h4>项目背景</h4>
+                        <p>品牌深耕海外多年，虽掌握“快、稳、准”的X3芯片数字笔核心技术，但在国内年轻人群体中认知度较低。</p>
+                        <h4>主要任务</h4>
+                        <p>需借助新品上市契机，策划自带传播力的内容，尝试将硬核的技术参数转化为Z世代的沟通语言，探索提升国内品牌声量的新路径。</p>
+                    </div>
+                    <div class="row-visual"><div class="slide-placeholder-img"><img src="xppen1.JPG" alt="BRIEF解读"></div></div>
+                </div>
+
+                <div class="presentation-row">
+                    <div class="row-narrative">
+                        <span class="slide-num">02 / 目标洞察</span>
+                        <h4>受众洞察</h4>
+                        <p>关注到Z世代群体对自我表达的渴望，以及当下网络渴望群体认同的“门派”文化盛行。在高速发展的社会中，年轻人表面孤僻，内心却极度渴望被认同。喜欢同一个事物的人天然组成了一个“精神门派”。我们决定顺应这股情绪，让XPPen作为底层力量，鼓励大家积聚勇气，大胆地表达真我、说出自己的故事。</p>
+                    </div>
+                    <div class="row-visual"><div class="slide-placeholder-img"><img src="xppen2.JPG" alt="核心洞察"></div></div>
+                </div>
+
+                <div class="presentation-row">
+                    <div class="row-narrative">
+                        <span class="slide-num">03 / 策略推导</span>
+                        <h4>核心策略</h4>
+                        <p>由受众洞察推导出“X门永存”的营销构想，计划将品牌追求技术突破的与年轻人展现真我的相连接，尝试通过情感共鸣来建立圈层认同。</p>
+                    </div>
+                    <div class="row-visual"><div class="slide-placeholder-img"><img src="xppen3.JPG" alt="营销策略"></div></div>
+                </div>
+
+                <div class="presentation-row" style="position: relative;"> 
+                    <div class="row-narrative">
+                        <span class="slide-num">04 /创意落地</span>
+                        <h4>预热期</h4>
+                        <p>规划了地铁海报与绘画“X门主争霸赛”线上征集，试图在短期内打响话题讨论度。</p>
+                        <h4>爆发期</h4>
+                        <p>构思了“勇闯X门”H5闯关小游戏，并联动线下快闪店，旨在让受众在沉浸式的轻社交体验中，直观感受产品“快稳准”的特质。</p>
+                        <span class="click-tip">💡 动效提示：点击右侧卡片堆可叠切下一张</span>
+                    </div>
+                    <div class="row-visual">
+                        <div class="interactive-image-stack" id="xppen-stack-4">
+                            <div class="stack-card" data-index="0"><img src="xppen4.1.JPG" alt="H5游戏机制"></div>
+                            <div class="stack-card" data-index="1"><img src="xppen4.2.JPG" alt="H5游戏界面"></div>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="presentation-row">
+                    <div class="row-narrative">
+                        <span class="slide-num">05 / 热度延续</span>
+                        <h4>传递品牌温度</h4>
+                        <p>结合开学季节点，策划了“X祝愿短信计划”，向学生群体发送鼓励突破自我的定制关怀。</p>
+                        <h4>个人复盘</h4>
+                        <p>作为一个校园比赛实战项目，虽然方案尚未真正投入市场，但这段经历让我完整走过了一遍从市场洞察、策略推导到全链路媒介排期的策划闭环。在情绪盛行的当下，我们需要去捕捉年轻人的情绪价值，并用结构化的逻辑将创意一步步推导为可落地的执行方案。</p>
+                    </div>
+                    <div class="row-visual"><div class="slide-placeholder-img"><img src="xppen5.JPG" alt="媒介与预算"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="jiguang-detail-modal" class="presentation-modal">
+        <!-- 🚨 左侧返回按钮 -->
+        <div class="close-jiguang-btn back-modal-btn"><span class="back-modal-text">◀ BACK</span></div>
+        <!-- 🚨 悬浮右上角大关闭按钮 -->
+        <div class="close-jiguang-btn close-modal-btn">✕ CLOSE</div>
+        
+        <div class="modal-scroll-wrapper">
+            <div class="modal-scroll-container">
+                <div class="modal-header">
+                    <span class="modal-meta">BRAND BUILDING / BUSINESS MODEL</span>
+                    <div class="modal-title-row">
+                        <h2>桔光峦晟：新农人桔链红土计划（会昌桔柚）</h2>
+                        <div class="download-btn-group">
+                            <a href="jiguang_word.pdf" target="_blank" class="pdf-download-btn doc-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                Word 详案
+                            </a>
+                            <a href="jiguang_ppt.pdf" target="_blank" class="pdf-download-btn ppt-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                PPT 提案
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 01 / 第一部分：正常排列 (文在左，图在右) -->
+                <div class="editorial-row">
+                    <div class="editorial-text">
+                        <span class="slide-num">01 / BUSINESS STRATEGY</span>
+                        <h4>项目背景</h4>
+                        <p>会昌桔柚产业长期面临产业链短、附加值低的痛点，优质果多以低价出售，在年轻消费者中缺乏吸引力。</p>
+                        <h4>主要任务</h4>
+                        <p>团队企划了从鲜果到深加工（果汁、果酱、精油等）的助农模式。我在此项目中的核心任务是完成配套的平面设计，让策划案里的产品有具体的形象。</p>
+                    </div>
+                    <div class="editorial-visual-single">
+                        <!-- 填入痛点分析图 -->
+                        <img src="桔柚痛点.png" alt="会昌桔柚痛点分析">
+                    </div>
+                </div>
+
+                <!-- 02 / 第二部分：Z字反转 (图在左，文在右) -->
+                <div class="editorial-row reverse-row">
+                    <div class="editorial-text">
+                        <span class="slide-num">02 / CONSUMER INSIGHT</span>
+                        <h4>受众洞察</h4>
+                        <p>前期调研发现，18-35岁的年轻消费群在购买农产品时，越来越看重产品的包装颜值和便捷性。</p>
+                        <h4>设计思路</h4>
+                        <p>我在包装设计上尽量避开传统农产品惯用的风格，尝试采用更清爽、简洁的排版，希望能更贴合当下年轻人的日常审美。</p>
+                    </div>
+                    <div class="editorial-visual-single">
+                        <!-- 填入问卷调查图 -->
+                        <img src="桔柚调查.png" alt="受众调查研究">
+                    </div>
+                </div>
+
+                <!-- 03 / 第三部分：正常排列 (包含Logo、IP和12张产品图堆叠) -->
+                <div class="editorial-row">
+                    <div class="editorial-text">
+                        <span class="slide-num">03 / VISUAL IDENTITY</span>
+                        <h4>视觉识别</h4>
+                        <p>提取了桔柚和初升太阳的元素绘制了“桔光峦晟”品牌Logo，并设计了拟人化IP形象“桔宝”，为品牌确立了温暖、活泼的基础视觉。</p>
+                        <h4>产品包装</h4>
+                        <p>针对不同产品线输出了具体的包装方案。例如NFC果汁采用了留白较多的极简排版，桔柚精油则使用了低饱和度的色彩，力求通过排版与配色来区分不同产品的定位。</p>
+                    </div>
+                    <div class="editorial-bento-gallery">
+                        <!-- 填入Logo图，加了contain确保不被裁切，加了白底让黑字Logo更显眼 -->
+                        <div class="bento-vi item-logo" style="background: #fff;">
+                            <img src="桔光峦晟横板logo.png" alt="桔光峦晟Logo" style="object-fit: contain; padding: 15px;">
+                        </div>
+                        
+                        <!-- 填入IP形象图，同样加了contain和白底 -->
+                        <div class="bento-vi item-ip" style="background: #fff;">
+                            <img src="桔柚IP形象.png" alt="桔宝IP形象" style="object-fit: contain; padding: 10px;">
+                        </div>
+                        
+                        <!-- 10张产品包装图堆叠区 -->
+                        <div class="bento-vi item-product multi-image-stack" style="cursor: pointer; position: relative;">
+                            <!-- 这里放你的 10 张图，注意第一张有个 active 类名 -->
+                            <img src="产品1.png" class="stack-img active">
+                            <img src="产品2.png" class="stack-img">
+                            <img src="产品3.png" class="stack-img">
+                            <img src="产品4.png" class="stack-img">
+                            <img src="产品5.png" class="stack-img">
+                            <img src="产品6.png" class="stack-img">
+                            <img src="产品7.png" class="stack-img">
+                            <img src="产品10.png" class="stack-img">
+                            <img src="产品11.png" class="stack-img">
+                            <img src="产品12.png" class="stack-img">
+                            <!-- 悬浮提示角标 -->
+                            <div class="click-tip" style="position: absolute; bottom: 15px; right: 15px; z-index: 20; background: rgba(0,0,0,0.6); padding: 5px 12px; border-radius: 20px; color: #fcd34d; font-size: 0.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">👆 点击切换 (1/10)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 04 / 第四部分：删除图片，个人复盘文字居中高亮展示 -->
+                <div class="editorial-row" style="justify-content: center; margin-bottom: 60px;">
+                    <div class="editorial-text" style="flex: none; max-width: 800px; text-align: center; background: rgba(255,255,255,0.02); padding: 40px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                        <span class="slide-num" style="display: block; margin-bottom: 15px;">04 / DIGITAL CAMPAIGN</span>
+                        <h4 style="font-size: 1.6rem; color: #fcd34d;">个人复盘</h4>
+                        <p>这次比赛让我有机会完整跟进了一套品牌视觉的执行过程。从前期的Logo草图到后期的多品类包装排版设计，极大地锻炼了我运用设计软件和把控整体视觉统一性的能力。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="coke-detail-modal" class="presentation-modal">
+        <!-- 🚨 左侧返回按钮 -->
+        <div class="close-coke-btn back-modal-btn"><span class="back-modal-text">◀ BACK</span></div>
+        <!-- 🚨 悬浮右上角大关闭按钮 -->
+        <div class="close-coke-btn close-modal-btn">✕ CLOSE</div>
+        
+        <div class="modal-scroll-wrapper">
+            <div class="modal-scroll-container">
+                <!-- 🚨 1. 缩小这里的 margin 和 padding，解决中间空隙太大的问题 -->
+                <div class="modal-header" style="margin-bottom: 20px; padding-bottom: 20px;">
+                    <span class="modal-meta">DATA MINING / ACADEMIC THESIS</span>
+                    <div class="modal-title-row">
+                        <h2>可口可乐 AIGC 广告受众认知研究</h2>
+                        <a href="coke_thesis.pdf" target="_blank" class="pdf-download-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                            查看毕业论文 PDF
+                        </a>
+                    </div>
+                    <!-- 🚨 2. 加粗并高亮“项目背景”和“核心任务” -->
+                    <p style="color: #e2e8f0; line-height: 1.8;"><strong style="color: #fcd34d; font-size: 1.05rem; letter-spacing: 1px;">项目背景：</strong>2025年，可口可乐推出由AIGC技术重制的经典圣诞广告，在全网引发了关于AI与广告创意的广泛讨论与争议。</p>
+                    <p style="color: #e2e8f0; line-height: 1.8;"><strong style="color: #fcd34d; font-size: 1.05rem; letter-spacing: 1px;">核心任务：</strong>获取客观、真实的海外受众反馈数据，并通过文本分析与机器学习算法，量化评估消费者对AI生成品牌广告的真实接受度，以此作为我毕业论文的研究支撑。</p>
+                </div>
+
+                <!-- 再次缩小这里的 gap 间距 -->
+                <div class="coke-presentation-block" style="gap: 20px;">
+                    <div class="slider-nav-row">
+                        <div class="slider-arrow-btn" id="coke-prev-btn">←</div>
+                        <div class="slider-arrow-btn" id="coke-next-btn">→</div>
+                    </div>
+
+                    <div class="slider-container">
+                        <div class="slider-track" id="coke-slider-track">
+                            <div class="slider-card">
+                                <div class="slider-card-text">
+                                    <span class="slide-num">STEP 01 / PYTHON API</span>
+                                    <h4>数据采集与清洗</h4>
+                                    <p>定向抓取： 利用AI模型编写了Python爬虫程序，调用YouTube Data API接口，精准抓取了该广告官方视频下的12,000多条真实受众评论。</p> 
+                                    <p>文本降噪处理： 面对包含缩写、特殊符号等繁杂的非结构化数据，我通过分词去噪、去除口语化停用词等清洗手段，最终可以用于主题模型分析的有效评论文本为11622条。</p>
+                                </div>
+                                <!-- 🚨 3. 插入图 1 -->
+                                <div class="slider-card-visual">
+                                    <img src="原始数据.png" alt="数据采集与清洗" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                                </div>
+                            </div>
+
+                            <div class="slider-card">
+                                <div class="slider-card-text">
+                                    <span class="slide-num">STEP 02 / TEXT MINING</span>
+                                    <h4>LDA 主题模型分析</h4>
+                                    <p>在算法层面，我引入了无监督机器学习中的 LDA（隐含狄利克雷分布）模型，将海量评论归纳出了五类受众认知维度主题。研究数据表明，受众既关注广告最终呈现出的视觉效果，也高度关注其背后的生产方式及其对品牌传统、节日叙事和创作价值的影响。</p>
+                                </div>
+                                <!-- 🚨 3. 插入图 2 -->
+                                <div class="slider-card-visual">
+                                    <img src="主题词云图.png" alt="主题词云图" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                                </div>
+                            </div>
+
+                            <div class="slider-card">
+                                <div class="slider-card-text">
+                                    <span class="slide-num">STEP 03 / REVIEW</span>
+                                    <h4>个人复盘</h4>
+                                    <p>这次毕设是我将AI作为生产力工具的一次实操。面对上万条杂乱评论，我借助AI高效完成了海量文本的提纯与分类。这让我积累了算法落地的经验，学会了如何使用技术去拆解实际问题。当然，无论AIGC技术如何进化，广告沟通的核心永远是真实的人性与情感共鸣。</p>
+                                </div>
+                                <!-- 🚨 3. 插入图 3 -->
+                                <div class="slider-card-visual">
+                                    <img src="主题占比分布图.png" alt="主题占比分布图" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="spss-detail-modal" class="presentation-modal">
+        <!-- 🚨 左侧返回按钮 -->
+        <div class="close-spss-btn back-modal-btn"><span class="back-modal-text">◀ BACK</span></div>
+        <!-- 🚨 悬浮右上角大关闭按钮 -->
+        <div class="close-spss-btn close-modal-btn">✕ CLOSE</div>
+        
+        <div class="modal-scroll-wrapper">
+            <div class="modal-scroll-container">
+                <div class="modal-header">
+                    <span class="modal-meta">QUANTITATIVE RESEARCH / SPSS DATA DASHBOARD</span>
+                    <div class="modal-title-row">
+                        <h2>数据分析 调查问卷</h2>
+                        <div class="download-btn-group">
+                            <a href="yuanmeng_spss.pdf" target="_blank" class="pdf-download-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                元梦之星 报告
+                            </a>
+                            <a href="mars_concert_spss.pdf" target="_blank" class="pdf-download-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                火星演唱会 报告
+                            </a>
+                        </div>
+                    </div>
+                    <p>严谨的数据能够透过表象看实质。在这里，我将展示两个量化实操项目，分别侧重于 SPSS 统计分析的深度应用与专业问卷量表的设计优化。</p>
+                </div>
+
+                <!-- 完美的左右两列排版 + 核心结论提取 -->
+                <div class="dashboard-grid">
+                    
+                    <!-- 项目一：火星演唱会 (左列/橙色系) -->
+                    <div class="dash-panel panel-orange">
+                        <div class="panel-header">
+                            <span class="panel-id">PROJECT_01 / 2023年</span>
+                            <h3>《火星演唱会》受众意愿量化分析</h3>
+                            <div class="method-tags"><span>SPSS数据分析</span><span>方差分析</span><span>卡方检验</span></div>
+                        </div>
+                        <div class="panel-body">
+                            <h4 style="color: #fb923c; margin-top: 10px;">🎯 项目背景与任务</h4>
+                            <p>2023年，疫情过后线下演出市场全面复苏，我以《火星演唱会》为调研对象，核心任务是通过量化数据，客观分析受众的观看意愿及其背后的核心影响因素。</p>
+                            
+                            <h4 style="color: #fb923c; margin-top: 25px;">⚙️ 分析策略与执行</h4>
+                            <p>在这个项目中，我将重心放在了 SPSS 统计分析的应用上。在确保数据信度达标后，我重点运用了皮尔逊相关性分析、多因素方差分析（ANOVA）和交叉表卡方检验，精准剖析了受众的“年龄”、“性别”等人口学变量与“全员站票接受度”、“演唱会参与意愿”之间的深层关联。</p>
+
+                            <!-- 🚨 补充结论模块 (橙色高亮) -->
+                            <div class="highlight-insight" style="margin-top: 25px; border-color: rgba(251,146,60,0.3); background: rgba(251,146,60,0.05); padding: 15px; border-radius: 8px;">
+                                <span style="color: #fb923c; font-weight: bold; display: block; margin-bottom: 5px;">💡 核心结论：</span>
+                                <span style="color: #e2e8f0; font-size: 0.9rem; line-height: 1.6;">分析结果表明，受众对“全员站票”的创新模式接受度良好。更重要的是，交叉检验显示，除歌手本身外，“沉浸式园区体验（美食/游戏/艺术打卡）”已成为有效刺激消费、提升参与意愿的关键次生变量。</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 项目二：元梦之星 (右列/蓝色系) -->
+                    <div class="dash-panel panel-blue">
+                        <div class="panel-header">
+                            <span class="panel-id">PROJECT_02 / 2024年</span>
+                            <h3>《元梦之星》广告效果评估与量表优化</h3>
+                            <div class="method-tags"><span>问卷设计</span><span>李克特量表</span><span>数据清洗</span></div>
+                        </div>
+                        <div class="panel-body">
+                            <h4 style="color: #60a5fa; margin-top: 10px;">🎯 项目背景与任务</h4>
+                            <p>《元梦之星》在上线初期进行了全渠道的密集广告投放。我选择了该广告作为研究对象，设计了一套科学的评估体系，量化测度受众对该游戏广告的认知度与下载转化意愿。</p>
+                            
+                            <h4 style="color: #60a5fa; margin-top: 25px;">🧹 设计策略与数据清洗</h4>
+                            <p>我将该项目的重心放在了问卷设计的严谨性上。我引入了李克特五级量表，并在问卷中预设了“指定选项陷阱题”以剔除无效答卷。为了优化量表质量，我运用计算高低分组平均分差的方法，筛除了区分度不高的陈述项，并进行了 KMO 检验与探索性因子分析，最大程度确保了问卷结构的有效性与最终数据的纯净度。</p>
+
+                            <!-- 🚨 补充结论模块 (蓝色高亮) -->
+                            <div class="highlight-insight" style="margin-top: 25px; border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.05); padding: 15px; border-radius: 8px;">
+                                <span style="color: #60a5fa; font-weight: bold; display: block; margin-bottom: 5px;">💡 核心结论：</span>
+                                <span style="color: #e2e8f0; font-size: 0.9rem; line-height: 1.6;">数据评估反映，广告的整体触达率与视听表现优异，但在“角色设计呈现”环节存在受众流失风险。此外数据证实，“时代少年团的明星效应”与“熟人社交邀请”是驱动最终下载转化的最核心显著变量。</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- dashboard-grid 结束 -->
+
+                <!-- 底部通栏：我的核心收获 -->
+                <div style="background: rgba(252, 211, 77, 0.05); border: 1px solid rgba(252, 211, 77, 0.2); padding: 35px 40px; border-radius: 16px; margin-top: -20px; margin-bottom: 80px;">
+                    <h4 style="color: #fcd34d; font-size: 1.4rem; margin-top: 0; margin-bottom: 25px; text-align: center; letter-spacing: 2px;">✨ 我的核心收获</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                        <div>
+                            <strong style="color: #e2e8f0; font-size: 1.1rem; display: block; margin-bottom: 10px;">学会应用数据分析工具：</strong>
+                            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin: 0;">通过这两个项目的实操，我真正将统计学理论落地，了解了 SPSS 软件的核心功能，能够独立完成从信效度检验到方差分析、卡方检验等一系列数据跑库工作。</p>
+                        </div>
+                        <div>
+                            <strong style="color: #e2e8f0; font-size: 1.1rem; display: block; margin-bottom: 10px;">建立严谨的数据思维：</strong>
+                            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin: 0;">我学到了如何用科学的逻辑去推敲问卷里的每一个问题，也明白了如何通过数据清洗剥离无效信息，优化问卷，提高数据的有效性。这让我在面对效果评估时，能够用扎实、干净的数据去推导客观的结论。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="minsu-detail-modal" class="presentation-modal">
+        <!-- 🚨 左侧返回按钮 -->
+        <div class="close-minsu-btn back-modal-btn"><span class="back-modal-text">◀ BACK</span></div>
+        <!-- 🚨 悬浮右上角大关闭按钮 -->
+        <div class="close-minsu-btn close-modal-btn">✕ CLOSE</div>
+        
+        <div class="modal-scroll-wrapper">
+            <div class="modal-scroll-container">
+                <div class="modal-header">
+                    <span class="modal-meta">IMC CAMPAIGN & SOCIAL OPERATIONS</span>
+                    <div class="modal-title-row">
+                        <h2>《整合营销 直播变现》</h2>
+                        <div class="download-btn-group">
+                            <a href="minsu_market.pdf" target="_blank" class="pdf-download-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                市场方案 PDF
+                            </a>
+                            <a href="minsu_brand.pdf" target="_blank" class="pdf-download-btn doc-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                品牌方案 PDF
+                            </a>
+                            <a href="minsu_communication.pdf" target="_blank" class="pdf-download-btn ppt-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                传播方案 PDF
+                            </a>
+                        </div>
+                    </div>
+                    <p> </p>
+                </div>
+
+                <!-- 🚨 新增：01 项目背景与主要任务 -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 40px; margin-bottom: 60px;">
+                    <h3 style="color: #fcd34d; font-size: 1.5rem; margin-top: 0; margin-bottom: 30px; border-left: 4px solid #fcd34d; padding-left: 15px;">01 / 项目背景与主要任务 (BACKGROUND & MISSION)</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 12px;">
+                            <strong style="color: #e2e8f0; font-size: 1.1rem; display: block; margin-bottom: 10px;">🎯 项目背景：</strong>
+                            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin: 0;">“民俗风”是一家专注江西各地土特产的企业，面临着品牌年轻化不足、线上销售渠道和社交声量薄弱的问题。</p>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 12px;">
+                            <strong style="color: #e2e8f0; font-size: 1.1rem; display: block; margin-bottom: 10px;">🚀 主要任务：</strong>
+                            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin: 0;">团队的核心任务是策划并落地一套能够打通线上线下的整合营销方案。我的具体职责，是作为核心成员参与抖音账号的运营，并通过短视频内容引流与高频次的直播带货，协助团队实打实地完成从产品曝光到最终销售转化的任务。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 80px;">
+                    <h3 style="color: #60a5fa; font-size: 1.5rem; margin-bottom: 40px; border-left: 4px solid #60a5fa; padding-left: 15px;">02 / 策略与核心实操 (STRATEGY & EXECUTION)</h3>
+                    
+                    <div class="presentation-row">
+                        <div class="row-narrative">
+                            <span class="slide-num">STEP 01 / MATRIX</span>
+                            <h4>全域传播矩阵</h4>
+                            <p>团队围绕“特别的爱给特别的TA”主题，搭建了抖音、小红书、百家号、头条号四大传播矩阵，实现统一发声与多维种草。</p>
+                        </div>
+                        <!-- 🚨 三图并列摆放区 (渠道1到3) -->
+                        <div class="row-visual" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                            <div style="aspect-ratio: 9/16; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center;">
+                                <img src="渠道1.jpg" alt="渠道1" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="aspect-ratio: 9/16; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center;">
+                                <img src="渠道2.jpg" alt="渠道2" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="aspect-ratio: 9/16; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center;">
+                                <img src="渠道3.jpg" alt="渠道3" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 🚨 Z字反转：图左文右 -->
+                    <div class="presentation-row reverse-row">
+                        <div class="row-narrative">
+                            <span class="slide-num">STEP 02 / SHORT VIDEO</span>
+                            <h4>短视频引流实操</h4>
+                            <p>我主要负责了“四喜丸子”（现为什锦味大杂烩）抖音号的孵化，单月高频发布29条视频。通过将特产自然植入“大学生日常”，最高单条视频播放破1.4万。</p>
+                        </div>
+                        <!-- 🚨 三图并列摆放区 (抖音1到3) -->
+                        <div class="row-visual" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                            <div style="aspect-ratio: 9/16; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center;">
+                                <img src="抖音1.jpg" alt="抖音1" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="aspect-ratio: 9/16; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center;">
+                                <img src="抖音2.jpg" alt="抖音2" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="aspect-ratio: 9/16; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center;">
+                                <img src="抖音3.jpg" alt="抖音3" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="presentation-row">
+                        <div class="row-narrative">
+                            <span class="slide-num">STEP 03 / LIVE STREAMING</span>
+                            <h4>单月直播执行</h4>
+                            <p>承接短视频流量，我全程跟进并执行了32场实景直播（累计近40小时）。在团队协作下，我具体完成了选品、直播话术梳理，并在后台进行罗盘数据监控与复盘，切实参与各个环节。</p>
+                        </div>
+                        <!-- 🚨 宽版单图展示区 (直播截图) -->
+                        <div class="row-visual">
+                            <div style="aspect-ratio: 16/9; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                                <img src="直播.png" alt="直播数据与实况" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: #ec4899; font-size: 1.5rem; margin-bottom: 40px; border-left: 4px solid #ec4899; padding-left: 15px;">03 / 核心战报与商业复盘 (RESULTS & REVIEW)</h3>
+                    
+                    <!-- 🚨 重点突出：横向宽幅抖音核心数据战报 -->
+                    <!-- 修复点1：顺手帮你把网格改成了 1fr，让数据直接居中铺满，排版更高级 -->
+                    <div class="dash-panel" style="border-top: 4px solid #ec4899; display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; margin-bottom: 40px; background: rgba(11, 19, 32, 0.8);">
+                        <div>
+                            <div class="panel-header">
+                                <span class="panel-id" style="color: #f472b6;">CORE PLATFORM / 核心战区</span>
+                                <h3 style="font-size: 1.8rem; margin: 10px 0;">抖音矩阵：@四喜丸子</h3>
+                                <div class="method-tags"><span>29条高频短视频</span><span>32场实景直播</span></div>
+                            </div>
+                            <div class="metrics-row" style="background: transparent; border: none; padding: 0; margin-top: 25px;">
+                                <div class="metric-box"><span class="metric-label">最高单条播放</span><span class="metric-value" style="color:#f472b6;">14,000+</span></div>
+                                <div class="metric-box"><span class="metric-label">单月精准涨粉</span><span class="metric-value" style="color:#f472b6;">300+</span></div>
+                                <div class="metric-box"><span class="metric-label">成交总金额</span><span class="metric-value" style="color:#f472b6;">4,100+</span></div>
+                            </div>
+                        </div>
+                    </div> <!-- 🚨 修复点2：就是这里！补上丢失的关闭标签，不让它再“吃掉”后面的内容了 -->
+
+                    <!-- 🚨 商业复盘总结 -->
+                    <div style="background: rgba(236, 72, 153, 0.05); border: 1px solid rgba(236, 72, 153, 0.2); padding: 40px; border-radius: 16px; margin-bottom: 60px;">
+                        <h4 style="color: #f472b6; font-size: 1.3rem; margin-top: 0; margin-bottom: 25px; text-align: center; letter-spacing: 2px;">💭 项目复盘与总结</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                            <div>
+                                <strong style="color: #e2e8f0; font-size: 1.1rem; display: block; margin-bottom: 10px;">一次被“毙掉”的策划：</strong>
+                                <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin: 0;">团队原计划推进的校园线下试吃快闪，因甲方评估“投入产出比（ROI）难以准确衡量”被否决。我们迅速调整策略，还是将精力继续转战到数据更易追踪的短视频与直播赛道。</p>
+                            </div>
+                            <div>
+                                <strong style="color: #e2e8f0; font-size: 1.1rem; display: block; margin-bottom: 10px;">从“学生思维”到“商业思维”：</strong>
+                                <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin: 0;">方案被毙让我意识到，好的创意必须以ROI（投资回报率）和最终转化为导向。在这个过程中，我也切实积累了短视频起号、直播场控及数据复盘的执行经验。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             </div> <!-- ✅ 关闭 modal-scroll-container -->
+        </div> <!-- ✅ 关闭 modal-scroll-wrapper -->
+    </div> <!-- ✅ 彻底且安全地关闭 minsu-detail-modal -->
+
+    <!-- 🔥 06. 画册专属：小尺寸透视 Lightbox 悬浮窗 -->
+    <div id="booklet-detail-modal" class="lightbox-modal">
+        <div class="lightbox-content">
+            <div class="close-booklet-btn lightbox-close-btn">✕</div>
+            
+            <div class="lightbox-header">
+                <h3>《赣风华章》民俗旅游景点画册设计</h3>
+                <p>交互提示：点击左右箭头翻阅完整画册</p>
+            </div>
+
+            <div class="booklet-gallery-container" style="position: relative;">
+                <div class="booklet-arrow-btn booklet-prev-btn">←</div>
+                <div class="booklet-arrow-btn booklet-next-btn">→</div>
+
+                <div class="booklet-track" id="booklet-scroll-track">
+                    <div class="booklet-page"><img src="画板 1.jpg" alt="画册 第1页"></div>
+                    <div class="booklet-page"><img src="画板 2.jpg" alt="画册 第2页"></div>
+                    <div class="booklet-page"><img src="画板 3.jpg" alt="画册 第3页"></div>
+                    <div class="booklet-page"><img src="画板 4.jpg" alt="画册 第4页"></div>
+                    <div class="booklet-page"><img src="画板 5.jpg" alt="画册 第5页"></div>
+                    <div class="booklet-page"><img src="画板 6.jpg" alt="画册 第6页"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔥 07. 竞赛海报专属：发牌式画廊弹窗 -->
+    <div id="poster-detail-modal" class="lightbox-modal">
+        <div class="lightbox-content" style="max-width: 1400px; height: 75vh;">
+            <div class="close-poster-btn lightbox-close-btn">✕</div>
+            
+            <div class="lightbox-header">
+                <h3>大学生广告艺术节学院奖系列平面海报</h3>
+                <p>交互提示：支持横向滑动，点击单张海报即可居中放大查阅</p>
+            </div>
+
+            <div class="poster-gallery-container">
+                <div class="poster-track">
+                    <img src="海报1.png" class="poster-card" alt="海报1">
+                    <img src="海报2.png" class="poster-card" alt="海报2">
+                    <img src="海报3.jpg" class="poster-card" alt="海报3">
+                    <img src="海报4.jpg" class="poster-card" alt="海报4">
+                    <img src="海报5.png" class="poster-card" alt="海报5">
+                    <img src="海报6.png" class="poster-card" alt="海报6">
+                    <img src="海报7.png" class="poster-card" alt="海报7">
+                    <img src="海报8.jpg" class="poster-card" alt="海报8">
+                </div>
+            </div>
+
+            <div class="poster-spotlight">
+                <img src="" id="spotlight-img" alt="海报放大图">
+                <div class="close-spotlight-tip">点击任意空白处返回</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔥 08. 公众号专属：左手机 + 右视频矩阵弹窗 -->
+    <div id="wechat-detail-modal" class="lightbox-modal">
+        <div class="lightbox-content wechat-modal-content">
+            <div class="close-wechat-btn lightbox-close-btn">✕</div>
+
+            <div class="wechat-left-pane">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <video src="wechat_homepage.mp4" autoplay loop muted playsinline></video>
+                </div>
+            </div>
+
+            <div class="wechat-right-pane">
+                <div class="wechat-header">
+                    <h3 style="color: #f8fafc; margin: 0 0 5px 0; font-size: 1.6rem;">8期科普长图文自媒体系列</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem; margin: 0;">点击视频开启大屏有声播放，点击底部按钮阅读完整图文</p>
+                </div>
+                
+                <div class="wechat-video-grid">
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper">
+                            <video src="video1.mp4" autoplay loop muted playsinline></video>
+                            <div class="play-icon">▶</div>
+                        </div>
+                        <a href="https://mp.weixin.qq.com/s/wRuMNfWDPbi_y1qS7ZP-ow" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper"><video src="video2.mp4" autoplay loop muted playsinline></video><div class="play-icon">▶</div></div>
+                        <a href="https://mp.weixin.qq.com/s/YoKeIv9-KJYJIwBH49QHzQ" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper"><video src="video3.mp4" autoplay loop muted playsinline></video><div class="play-icon">▶</div></div>
+                        <a href="https://mp.weixin.qq.com/s/eExy8HUQSc653rpoDkRB6A" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper"><video src="video4.mp4" autoplay loop muted playsinline></video><div class="play-icon">▶</div></div>
+                        <a href="https://mp.weixin.qq.com/s/rY8y9zmYsYT0qhFZTgX0LQ" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper"><video src="video5.mp4" autoplay loop muted playsinline></video><div class="play-icon">▶</div></div>
+                        <a href="https://mp.weixin.qq.com/s/MFqUdvSaONThHUS_-QiZYQ" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper"><video src="video6.mp4" autoplay loop muted playsinline></video><div class="play-icon">▶</div></div>
+                        <a href="https://mp.weixin.qq.com/s/1C--kpPVoZk6A-WaYmPwpw" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper"><video src="video7.mp4" autoplay loop muted playsinline></video><div class="play-icon">▶</div></div>
+                        <a href="https://mp.weixin.qq.com/s/xsG8taWI1TPcKgqRed7jbg" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                    <div class="wechat-video-item">
+                        <div class="video-wrapper"><video src="video8.mp4" autoplay loop muted playsinline></video><div class="play-icon">▶</div></div>
+                        <a href="https://mp.weixin.qq.com/s/dTFO210EbtMJjZB7bqc4nQ" target="_blank" class="view-article-btn">查看全文 ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-spotlight">
+                <div class="close-vid-spotlight-btn">✕</div>
+                <video id="spotlight-video-player" src="" controls autoplay></video>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS 逻辑控制中心 -->
+    <script>
+        // --- 1. 🚨 修改版：控制全屏弹窗开启与关闭 (支持多个关闭按钮) ---
+        function bindModal(btnSelector, modalId, closeSelector) {
+            const btn = document.querySelector(btnSelector);
+            const modal = document.getElementById(modalId);
+            const closeBtns = document.querySelectorAll(closeSelector);
+            if(btn && modal && closeBtns.length > 0) {
+                btn.addEventListener('click', () => { modal.style.display = 'block'; document.body.style.overflow = 'hidden'; });
+                closeBtns.forEach(closeBtn => {
+                    closeBtn.addEventListener('click', () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; });
+                });
+            }
+        }
+        bindModal('.open-xppen-modal', 'xppen-detail-modal', '.close-xppen-btn');
+        bindModal('.open-jiguang-modal', 'jiguang-detail-modal', '.close-jiguang-btn');
+        bindModal('.open-coke-modal', 'coke-detail-modal', '.close-coke-btn');
+        bindModal('.open-spss-modal', 'spss-detail-modal', '.close-spss-btn');
+        bindModal('.open-minsu-modal', 'minsu-detail-modal', '.close-minsu-btn');
+
+        // --- 2. 绑定《赣风华章》轻量级悬浮画廊弹窗 ---
+        const openBookletBtn = document.querySelector('.open-booklet-modal');
+        const modalBooklet = document.getElementById('booklet-detail-modal');
+        const closeBookletBtn = document.querySelector('.close-booklet-btn');
+
+        if(openBookletBtn && closeBookletBtn && modalBooklet) {
+            openBookletBtn.addEventListener('click', () => {
+                modalBooklet.style.display = 'flex'; 
+                document.body.style.overflow = 'hidden'; 
+                setTimeout(() => { modalBooklet.classList.add('is-open'); }, 10);
+            });
+
+            closeBookletBtn.addEventListener('click', () => {
+                modalBooklet.classList.remove('is-open');
+                setTimeout(() => {
+                    modalBooklet.style.display = 'none';
+                    document.body.style.overflow = 'auto'; 
+                    document.querySelector('.booklet-track').scrollLeft = 0; 
+                }, 400);
+            });
+        }
+
+        // --- 3. XPPen 双图重叠切卡交互 ---
+        const imageStack = document.getElementById('xppen-stack-4');
+        if (imageStack) {
+            imageStack.addEventListener('click', () => {
+                const cards = imageStack.querySelectorAll('.stack-card');
+                cards.forEach(card => {
+                    let currentIndex = parseInt(card.getAttribute('data-index'));
+                    let nextIndex = (currentIndex === 0) ? 1 : 0;
+                    card.setAttribute('data-index', nextIndex);
+                });
+            });
+        }
+
+        // --- 4. 可口可乐专属：3D视差横向幻灯片轮播控制器 ---
+        const cokeTrack = document.getElementById('coke-slider-track');
+        const cokePrev = document.getElementById('coke-prev-btn');
+        const cokeNext = document.getElementById('coke-next-btn');
+        if(cokeTrack && cokePrev && cokeNext) {
+            let currentSlide = 0;
+            const cardWidth = 790; 
+            const totalSlides = 3; 
+
+            cokeNext.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) { currentSlide++; } else { currentSlide = 0; } 
+                cokeTrack.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+            });
+
+            cokePrev.addEventListener('click', () => {
+                if (currentSlide > 0) { currentSlide--; } else { currentSlide = totalSlides - 1; }
+                cokeTrack.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+            });
+        }
+
+        // --- 5. 通用横向滚动逻辑 (控制影像叙事) ---
+        function handleStickyScroll(wrapperSelector, trackSelector) {
+            const wrapper = document.querySelector(wrapperSelector);
+            const track = document.querySelector(trackSelector);
+            if (!wrapper || !track) return;
+
+            const rect = wrapper.getBoundingClientRect();
+            const maxScrollPx = track.scrollWidth - window.innerWidth;
+            const scrollableHeight = rect.height - window.innerHeight;
+
+            let rawProgress = 0;
+            if (rect.top > 0) { 
+                rawProgress = 0; 
+            } else if (rect.bottom < window.innerHeight) { 
+                rawProgress = 1; 
+            } else { 
+                rawProgress = Math.abs(rect.top) / scrollableHeight; 
+            }
+
+            let mappedProgress = rawProgress;
+            if (rawProgress < 0.3) {
+                mappedProgress = 0; // 停留在第一个视频
+            } else if (rawProgress > 0.7) {
+                mappedProgress = 1; // 停留在第二个视频
+            } else {
+                mappedProgress = (rawProgress - 0.3) / 0.4;
+            }
+
+            track.style.transform = `translateX(-${mappedProgress * maxScrollPx}px)`;
+        }
+
+        window.addEventListener('scroll', () => {
+            handleStickyScroll('.sticky-wrapper', '.carousel-track');
+        });
+
+        // --- 6. 画册专属：左右箭头点击横向翻页 (无限循环版) ---
+        const bookletTrack = document.getElementById('booklet-scroll-track');
+        const bookletPrev = document.querySelector('.booklet-prev-btn');
+        const bookletNext = document.querySelector('.booklet-next-btn');
+
+        if(bookletTrack && bookletPrev && bookletNext) {
+            bookletNext.addEventListener('click', () => {
+                const isAtEnd = bookletTrack.scrollLeft + bookletTrack.clientWidth >= bookletTrack.scrollWidth - 10;
+                if (isAtEnd) {
+                    bookletTrack.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    const scrollAmount = bookletTrack.clientWidth * 0.6;
+                    bookletTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            });
+
+            bookletPrev.addEventListener('click', () => {
+                const isAtStart = bookletTrack.scrollLeft <= 10;
+                if (isAtStart) {
+                    bookletTrack.scrollTo({ left: bookletTrack.scrollWidth, behavior: 'smooth' });
+                } else {
+                    const scrollAmount = bookletTrack.clientWidth * 0.6;
+                    bookletTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                }
+            });
+        }
+
+        // --- 7. 绑定《海报画廊》发牌弹窗 ---
+        const openPosterBtn = document.querySelector('.open-poster-modal');
+        const modalPoster = document.getElementById('poster-detail-modal');
+        const closePosterBtn = document.querySelector('.close-poster-btn');
+
+        if(openPosterBtn && closePosterBtn && modalPoster) {
+            openPosterBtn.addEventListener('click', () => {
+                modalPoster.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; 
+                setTimeout(() => { modalPoster.classList.add('is-open'); }, 10);
+            });
+
+            closePosterBtn.addEventListener('click', () => {
+                modalPoster.classList.remove('is-open');
+                const posterSpotlight = document.querySelector('.poster-spotlight');
+                if(posterSpotlight) posterSpotlight.classList.remove('show');
+                
+                setTimeout(() => {
+                    modalPoster.style.display = 'none';
+                    document.body.style.overflow = 'auto'; 
+                    document.querySelector('.poster-track').scrollLeft = 0; 
+                }, 400);
+            });
+        }
+
+        // --- 8. 海报点击聚光灯居中放大逻辑 ---
+        const posterCards = document.querySelectorAll('.poster-card');
+        const posterSpotlight = document.querySelector('.poster-spotlight');
+        const spotlightImg = document.getElementById('spotlight-img');
+
+        posterCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const imgSrc = card.getAttribute('src');
+                spotlightImg.setAttribute('src', imgSrc);
+                posterSpotlight.classList.add('show');
+            });
+        });
+
+        if (posterSpotlight) {
+            posterSpotlight.addEventListener('click', () => {
+                posterSpotlight.classList.remove('show');
+            });
+        }
+
+        // --- 9. 绑定《公众号视频矩阵》弹窗 ---
+        const openWechatBtn = document.querySelector('.open-wechat-modal');
+        const modalWechat = document.getElementById('wechat-detail-modal');
+        const closeWechatBtn = document.querySelector('.close-wechat-btn');
+
+        if(openWechatBtn && closeWechatBtn && modalWechat) {
+            openWechatBtn.addEventListener('click', () => {
+                modalWechat.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; 
+                setTimeout(() => { modalWechat.classList.add('is-open'); }, 10);
+            });
+
+            closeWechatBtn.addEventListener('click', () => {
+                modalWechat.classList.remove('is-open');
+                hideWechatSpotlight();
+                setTimeout(() => {
+                    modalWechat.style.display = 'none';
+                    document.body.style.overflow = 'auto'; 
+                }, 400);
+            });
+        }
+
+        // --- 10. 视频点击放大 & 有声播放逻辑 ---
+        const wechatVideoWrappers = document.querySelectorAll('.wechat-video-item .video-wrapper');
+        const wechatSpotlight = document.querySelector('.video-spotlight');
+        const spotlightVideoPlayer = document.getElementById('spotlight-video-player');
+        const closeVidSpotlightBtn = document.querySelector('.close-vid-spotlight-btn');
+
+        wechatVideoWrappers.forEach(wrapper => {
+            wrapper.addEventListener('click', () => {
+                const vidSrc = wrapper.querySelector('video').getAttribute('src');
+                spotlightVideoPlayer.setAttribute('src', vidSrc);
+                wechatSpotlight.classList.add('show');
+                spotlightVideoPlayer.play(); 
+            });
+        });
+
+        const hideWechatSpotlight = () => {
+            if(wechatSpotlight) {
+                wechatSpotlight.classList.remove('show');
+                spotlightVideoPlayer.pause(); 
+                spotlightVideoPlayer.removeAttribute('src'); 
+            }
+        };
+
+        if(closeVidSpotlightBtn) closeVidSpotlightBtn.addEventListener('click', hideWechatSpotlight);
+        if(wechatSpotlight) {
+            wechatSpotlight.addEventListener('click', (e) => {
+                if(e.target === wechatSpotlight) hideWechatSpotlight();
+            });
+        }
+
+        // --- 11. 影像叙事：视频点击控制与离开整体视窗自动静音 ---
+        const videoContainers = document.querySelectorAll('#visual-storytelling .video-container');
+        
+        videoContainers.forEach(container => {
+            const video = container.querySelector('video');
+            const catcher = container.querySelector('.click-catcher');
+            const hint = container.querySelector('.play-hint');
+            
+            if (catcher && video) {
+                catcher.addEventListener('click', function() {
+                    if (video.muted) {
+                        video.currentTime = 0; 
+                        video.muted = false;   
+                        video.play();          
+                        if (hint) hint.style.opacity = '0';
+                    } else {
+                        if (video.paused) {
+                            video.play();
+                            if (hint) hint.style.opacity = '0';
+                        } else {
+                            video.pause();
+                            if (hint) hint.style.opacity = '0.8';
+                        }
+                    }
+                });
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        video.pause();
+                        video.muted = true;
+                        if(hint) { hint.innerHTML = '▶'; hint.style.opacity = '0.8'; }
+                    } else {
+                        video.muted = true;
+                        video.play().catch(()=>{});
+                    }
+                });
+            }, { threshold: 0.1 }); 
+            observer.observe(video);
+            
+            video.addEventListener('play', () => { if(video.muted === false && hint) hint.style.opacity = '0'; });
+            video.addEventListener('pause', () => { if(hint) { hint.innerHTML = '⏸'; hint.style.opacity = '0.8'; } });
+        });
+
+        // --- 12. 桔光峦晟 12张产品图点击循环切换 ---
+        const productStack = document.querySelector('.multi-image-stack');
+        if (productStack) {
+            const images = productStack.querySelectorAll('.stack-img');
+            const counterTip = productStack.querySelector('.click-tip');
+            let currentImgIndex = 0;
+
+            productStack.addEventListener('click', () => {
+                // 隐藏当前图片
+                images[currentImgIndex].classList.remove('active');
+                // 索引+1，如果是最后一张则回到第0张
+                currentImgIndex = (currentImgIndex + 1) % images.length;
+                // 显示下一张
+                images[currentImgIndex].classList.add('active');
+                // 更新右下角数字提示
+                if (counterTip) {
+                    counterTip.innerHTML = `👆 点击切换 (${currentImgIndex + 1}/${images.length})`;
+                }
+            });
+        }
+
+// --- 13. 网页背景滚动渐变 (黑夜 -> 蓝调破晓 -> 金色日出) ---
+        window.addEventListener('scroll', () => {
+            const scrollPx = document.documentElement.scrollTop || document.body.scrollTop;
+            const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollRatio = maxScroll > 0 ? scrollPx / maxScroll : 0;
+
+            const bgDawn = document.getElementById('bg-dawn');
+            const bgSunrise = document.getElementById('bg-sunrise');
+
+            if (bgDawn && bgSunrise) {
+                // 0 ~ 40%：深邃黑夜 (无需变动)
+                // 40% ~ 70%：过渡到蓝调破晓
+                // 70% ~ 100%：过渡到金色日出
+                if (scrollRatio < 0.4) {
+                    bgDawn.style.opacity = 0;
+                    bgSunrise.style.opacity = 0;
+                } else if (scrollRatio >= 0.4 && scrollRatio < 0.7) {
+                    let dawnRatio = (scrollRatio - 0.4) / 0.3; // 换算成 0 到 1
+                    bgDawn.style.opacity = dawnRatio;
+                    bgSunrise.style.opacity = 0;
+                } else {
+                    let sunriseRatio = (scrollRatio - 0.7) / 0.3; // 换算成 0 到 1
+                    bgDawn.style.opacity = 1 - sunriseRatio; // 蓝调逐渐褪去
+                    bgSunrise.style.opacity = sunriseRatio;  // 日出逐渐亮起
+                }
+            }
+        });
+
+        // --- 14. 留言板模拟提交逻辑 ---
+        const submitBtn = document.getElementById('submit-comment');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', () => {
+                const nameInput = document.getElementById('comment-name');
+                const contentInput = document.getElementById('comment-content');
+                const content = contentInput.value.trim();
+                
+                if (!content) {
+                    submitBtn.innerHTML = '写点什么再发送吧 ✍️';
+                    submitBtn.style.background = '#f87171';
+                    setTimeout(() => {
+                        submitBtn.innerHTML = '发送留言 🚀';
+                        submitBtn.style.background = '#fcd34d';
+                    }, 2000);
+                    return;
+                }
+                
+                const displayName = nameInput.value.trim() || '神秘访客';
+                const list = document.getElementById('comment-list');
+                
+                // 创建新留言块
+                const newComment = document.createElement('div');
+                newComment.style = "background: rgba(0,0,0,0.2); padding: 20px 25px; border-radius: 12px; border-left: 3px solid #fcd34d; opacity: 0; transform: translateY(-20px); transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);";
+                newComment.innerHTML = `<strong style="color: #fcd34d; font-size: 1.05rem;">${displayName}</strong><p style="color: #e2e8f0; margin: 10px 0 0 0; font-size: 0.95rem; line-height: 1.6;">${content}</p>`;
+                
+                // 插入到列表最上方
+                list.insertBefore(newComment, list.firstChild);
+                
+                // 触发丝滑出现动画
+                setTimeout(() => {
+                    newComment.style.opacity = 1;
+                    newComment.style.transform = 'translateY(0)';
+                }, 50);
+
+                // 按钮成功状态
+                contentInput.value = '';
+                nameInput.value = '';
+                submitBtn.innerHTML = '发送成功！感谢您的回音 🎉';
+                submitBtn.style.background = '#4ade80';
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '发送留言 🚀';
+                    submitBtn.style.background = '#fcd34d';
+                }, 3000);
+            });
+        }
+        
+        // 留言框交互高亮
+        const inputs = document.querySelectorAll('#feedback-section input, #feedback-section textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => input.style.borderColor = '#fcd34d');
+            input.addEventListener('blur', () => input.style.borderColor = 'rgba(255,255,255,0.1)');
+        });
+    </script>
+</body>
+</html>
