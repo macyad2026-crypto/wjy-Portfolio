@@ -408,6 +408,43 @@
             opacity: 1; z-index: 10;
         }
 
+        /* --- 视频外部包裹层 --- */
+        .project-wrapper {
+            margin-right: 15vw;
+            position: relative; /* 💡 关键魔法1：设为相对定位，作为按钮的坐标原点 */
+            /* 删掉了原来的 flex 和 gap，让它不再把视频往下挤 */
+        }
+        /* 消除原画框的右边距，移交给包裹层 */
+        .project-wrapper .project-card {
+            margin-right: 0 !important; 
+        }
+
+        /* 🚨 新版：悬浮式外部跳转按钮 */
+        .external-video-btn {
+            position: absolute; /* 💡 关键魔法2：绝对定位，让按钮脱离地面“飘”起来 */
+            top: -45px;         /* 向上悬浮到画框顶部的空白处 */
+            right: 0;           /* 乖乖和画框的右边缘对齐 */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 22px;
+            background: rgba(252, 211, 77, 0.15);
+            border: 1px solid rgba(252, 211, 77, 0.4);
+            border-radius: 30px;
+            color: #fcd34d;
+            font-size: 0.9rem;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+        .external-video-btn:hover {
+            background: #fcd34d;
+            color: #0b1320;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(252, 211, 77, 0.3);
+        }
+
         /* ========================================================= */
         /* 📱 手机端专属适配 (屏幕宽度小于 768px 时自动生效) */
         /* ========================================================= */
@@ -590,41 +627,52 @@
                 </div>
 
                 <div class="carousel-track">
-                    <div class="project-card">
-                        <div class="video-container">
-                            <video id="my-video-1" src="影像1.mp4" autoplay muted loop playsinline controls></video>
-                            <div class="click-catcher" style="position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 60px); z-index: 10; cursor: pointer;"></div>
-                            <div class="play-hint">▶</div>
-                        </div>
-                        <div class="project-overlay">
-                            <div class="overlay-header">
-                                <h3>《二三事》</h3>
-                                <div class="tags"><span>前期调研拆解</span><span>突发危机应对</span><span>视听情绪编排</span><span>双项大奖作品</span></div>
+                    <!-- 第一个视频模块 -->
+                    <div class="project-wrapper">
+                        <!-- 💡 按钮移到了这里：视频正上方，且绝对不会被切断 -->
+                        <a href="https://mp.weixin.qq.com/s/ltq2QQ6JL7Xw45ATzzN74g" target="_blank" class="external-video-btn">▶ 视频加载慢？点此外部观看完整版</a>
+                        
+                        <div class="project-card">
+                            <div class="video-container">
+                                <video id="my-video-1" src="影像1.mp4" autoplay muted loop playsinline controls></video>
+                                <div class="click-catcher" style="position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 60px); z-index: 10; cursor: pointer;"></div>
+                                <div class="play-hint">▶</div>
                             </div>
-                            <div class="overlay-details">
-                                <p>这部作品记录了一位程序员回到家乡转型开西餐厅的真实经历。最初我计划用他与合伙人分道扬镳作为核心冲突，但实拍时发现受访者心理包袱过重。面对主线缺失的危机，我果断调整策略，转而挖掘他在热闹餐厅背后属于个人的孤独底色。我在剪辑时放缓了空镜节奏，用轻盈的风铃画面与爱尔兰哨笛声去中和现实梦想的沉重。这段经历让我体会到，好的策划绝不是死磕预设剧本，而是敏锐捕捉真实反馈并迅速调整表达策略。</p>
+                            <div class="project-overlay">
+                                <div class="overlay-header">
+                                    <h3>《二三事》</h3>
+                                    <div class="tags"><span>前期调研拆解</span><span>突发危机应对</span><span>视听情绪编排</span><span>双项大奖作品</span></div>
+                                </div>
+                                <div class="overlay-details">
+                                    <p>这部作品记录了一位程序员回到家乡转型开西餐厅的真实经历。最初我计划用他与合伙人分道扬镳作为核心冲突，但实拍时发现受访者心理包袱过重。面对主线缺失的危机，我果断调整策略，转而挖掘他在热闹餐厅背后属于个人的孤独底色。我在剪辑时放缓了空镜节奏，用轻盈的风铃画面与爱尔兰哨笛声去中和现实梦想的沉重。这段经历让我体会到，好的策划绝不是死磕预设剧本，而是敏锐捕捉真实反馈并迅速调整表达策略。</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card">
-                        <div class="video-container">
-                            <video id="my-video-2" src="影像2.mp4" autoplay muted loop playsinline controls></video>
-                            <div class="click-catcher" style="position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 60px); z-index: 10; cursor: pointer;"></div>
-                            <div class="play-hint">▶</div>
-                        </div>
-                        <div class="project-overlay">
-                            <div class="overlay-header">
-                                <h3>悬疑短片《活着》 提前调低音量~</h3>
-                                <div class="tags"><span>交叉蒙太奇</span><span>创意脚本撰写</span></div>
+                    <!-- 第二个视频模块 -->
+                    <div class="project-wrapper">
+                        <!-- 💡 按钮移到了这里：视频正上方，且绝对不会被切断 -->
+                        <a href="https://www.douyin.com/jingxuan/search/%E4%BB%80%E9%94%A6%E5%91%B3%E5%A4%A7%E6%9D%82%E7%83%A9?aid=023883b3-798a-4433-b99f-aef35e41f938&modal_id=7496096336928902454&type=general" target="_blank" class="external-video-btn">▶ 视频加载慢？点此外部观看完整版</a>
+                        
+                        <div class="project-card">
+                            <div class="video-container">
+                                <video id="my-video-2" src="影像2.mp4" autoplay muted loop playsinline controls></video>
+                                <div class="click-catcher" style="position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 60px); z-index: 10; cursor: pointer;"></div>
+                                <div class="play-hint">▶</div>
                             </div>
-                            <div class="overlay-details">
-                                <p>此短片是我在营造恐怖氛围上的一次尝试。在叙事结构上，我选择了交叉蒙太奇来呈现并行的危机感；在声音构思上，则致敬了《杀死比尔》的口哨元素，又加入了刀片滑动的声音，试图用反差感的音效来烘托压抑的环境。希望通过视听层面的细节编排，呈现出属于我自己的影像表达。</p>
+                            <div class="project-overlay">
+                                <div class="overlay-header">
+                                    <h3>悬疑短片《活着》 提前调低音量~</h3>
+                                    <div class="tags"><span>交叉蒙太奇</span><span>创意脚本撰写</span></div>
+                                </div>
+                                <div class="overlay-details">
+                                    <p>此短片是我在营造恐怖氛围上的一次尝试。在叙事结构上，我选择了交叉蒙太奇来呈现并行的危机感；在声音构思上，则致敬了《杀死比尔》的口哨元素，又加入了刀片滑动的声音，试图用反差感的音效来烘托压抑的环境。希望通过视听层面的细节编排，呈现出属于我自己的影像表达。</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
         
         <!-- 02 策略洞察 -->
